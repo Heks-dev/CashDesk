@@ -30,7 +30,7 @@ public class HttpRequestExecutor implements RequestExecutor {
             this.response = new String(response.body().bytes(), "UTF-8");
             response.body().close();
         } catch (IOException e) {
-            throw new CommunicationException(e.getMessage());
+            throw new CommunicationException("Сервис недоступен.");
         }
     }
 
