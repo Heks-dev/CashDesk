@@ -1,7 +1,7 @@
 package ua.org.goservice.cashdesk.model.communication.request;
 
-import ua.org.goservice.cashdesk.model.api.ApiVal;
-import ua.org.goservice.cashdesk.model.api.ApiUrl;
+import ua.org.goservice.cashdesk.model.api.ReadableApi;
+import ua.org.goservice.cashdesk.model.api.ReadableUrl;
 import ua.org.goservice.cashdesk.model.communication.Extractive;
 
 import static ua.org.goservice.cashdesk.model.communication.request.RequestBuilderProperty.*;
@@ -10,20 +10,20 @@ public class RequestBuilder implements Extractive {
 
     private String formattedRequest;
 
-    public RequestBuilder(ApiUrl url, ApiVal api) {
+    public RequestBuilder(ReadableUrl url, ReadableApi api) {
         compose(url, api, null);
     }
 
-    public RequestBuilder(ApiUrl url, ApiVal api, String json) {
+    public RequestBuilder(ReadableUrl url, ReadableApi api, String json) {
         compose(url, api, json);
     }
 
-    public RequestBuilder(ApiUrl url, ApiVal api, FilterSet filterSet) {
+    public RequestBuilder(ReadableUrl url, ReadableApi api, FilterSet filterSet) {
         compose(url, api, filterSet == null ? null : filterSet.extract());
     }
 
 
-    private void compose(ApiUrl url, ApiVal api, String formatted) {
+    private void compose(ReadableUrl url, ReadableApi api, String formatted) {
         checkUndefined(url, api);
         StringBuilder builder = new StringBuilder();
         builder.append(getUrl(url.read()))
@@ -34,7 +34,7 @@ public class RequestBuilder implements Extractive {
         formattedRequest = builder.toString();
     }
 
-    private void checkUndefined(ApiUrl url, ApiVal api) {
+    private void checkUndefined(ReadableUrl url, ReadableApi api) {
         boolean undefined = (url == null || api == null);
         if (undefined) throw new IllegalArgumentException();
     }

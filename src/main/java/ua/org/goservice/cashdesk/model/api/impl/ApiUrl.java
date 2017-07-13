@@ -1,8 +1,8 @@
 package ua.org.goservice.cashdesk.model.api.impl;
 
-import ua.org.goservice.cashdesk.model.api.ApiUrl;
+import ua.org.goservice.cashdesk.model.api.ReadableUrl;
 
-public enum Url implements ApiUrl {
+public enum ApiUrl implements ReadableUrl {
     AUTHORIZATION("url.auth"),
     ORGANIZATION("url.org"),
     STOREHOUSE("url.storehouse"),
@@ -13,7 +13,7 @@ public enum Url implements ApiUrl {
 
     private final String value;
 
-    Url(String value) {
+    ApiUrl(String value) {
         this.value = value;
     }
 

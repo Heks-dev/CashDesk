@@ -1,15 +1,15 @@
 package ua.org.goservice.cashdesk.model.api.impl;
 
-import ua.org.goservice.cashdesk.model.api.ApiVal;
+import ua.org.goservice.cashdesk.model.api.ReadableApi;
 
-public enum Api implements ApiVal {
+public enum ApiVal implements ReadableApi {
     AUTH("api.login"),
     LIST("api.list"),
     NEW("api.new");
 
     private final String value;
 
-    Api(String value) {
+    ApiVal(String value) {
         this.value = value;
     }
 

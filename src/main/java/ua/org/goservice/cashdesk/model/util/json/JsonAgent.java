@@ -1,6 +1,7 @@
 package ua.org.goservice.cashdesk.model.util.json;
 
 import com.google.gson.Gson;
+import ua.org.goservice.cashdesk.model.exception.Exceptions;
 
 public class JsonAgent {
 
@@ -18,7 +19,7 @@ public class JsonAgent {
             case SINGLE_OBJECT:
                 return json.substring(1, json.length() - 1);
             default:
-                throw new IllegalArgumentException("Undefined json format");
+                throw new IllegalArgumentException(Exceptions.UNDEFINED_JSON_FORMAT);
         }
     }
 }

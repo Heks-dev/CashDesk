@@ -1,6 +1,8 @@
 package ua.org.goservice.cashdesk.model.api.impl;
 
-public enum ApiFilter implements ua.org.goservice.cashdesk.model.api.ApiFilter {
+import ua.org.goservice.cashdesk.model.api.ReadableFilter;
+
+public enum ApiFilter implements ReadableFilter {
     PASSWORD("password");
 
     private final String value;

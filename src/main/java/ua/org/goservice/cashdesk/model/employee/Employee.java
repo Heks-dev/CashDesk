@@ -1,9 +1,9 @@
 package ua.org.goservice.cashdesk.model.employee;
 
 import ua.org.goservice.cashdesk.model.Loadable;
-import ua.org.goservice.cashdesk.model.api.impl.Api;
+import ua.org.goservice.cashdesk.model.api.impl.ApiVal;
 import ua.org.goservice.cashdesk.model.api.impl.ApiFilter;
-import ua.org.goservice.cashdesk.model.api.impl.Url;
+import ua.org.goservice.cashdesk.model.api.impl.ApiUrl;
 import ua.org.goservice.cashdesk.model.communication.HttpRequestExecutor;
 import ua.org.goservice.cashdesk.model.communication.RequestExecutor;
 import ua.org.goservice.cashdesk.model.communication.request.Filter;
@@ -22,7 +22,7 @@ public class Employee implements Loadable {
     public void loadData(String[] params) {
         verifyParams(params);
         String password = params[0];
-        requestExecutor.sendRequest(new RequestBuilder(Url.AUTHORIZATION, Api.AUTH,
+        requestExecutor.sendRequest(new RequestBuilder(ApiUrl.AUTHORIZATION, ApiVal.AUTH,
                 new FilterSet(
                         new Filter(ApiFilter.PASSWORD, password))));
         String json = requestExecutor.getResponse();

@@ -1,18 +1,18 @@
 package ua.org.goservice.cashdesk.model.communication.request;
 
-import ua.org.goservice.cashdesk.model.api.ApiFilter;
+import ua.org.goservice.cashdesk.model.api.ReadableFilter;
 
 public class Filter {
 
-    private final ApiFilter apiFilter;
+    private final ReadableFilter apiFilter;
     private final Object val;
 
-    public Filter(ApiFilter apiFilter, Object val) {
+    public Filter(ReadableFilter apiFilter, Object val) {
         this.apiFilter = apiFilter;
         this.val = val;
     }
 
-    public ApiFilter getApiFilter() {
+    public ReadableFilter getApiFilter() {
         return apiFilter;
     }
 

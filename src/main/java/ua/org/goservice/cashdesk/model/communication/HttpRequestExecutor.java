@@ -5,6 +5,7 @@ import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 import ua.org.goservice.cashdesk.model.communication.request.RequestBuilder;
 import ua.org.goservice.cashdesk.model.exception.CommunicationException;
+import ua.org.goservice.cashdesk.model.exception.Exceptions;
 
 import java.io.*;
 import java.net.CookieManager;
@@ -30,7 +31,7 @@ public class HttpRequestExecutor implements RequestExecutor {
             this.response = new String(response.body().bytes(), "UTF-8");
             response.body().close();
         } catch (IOException e) {
-            throw new CommunicationException("Сервис недоступен.");
+            throw new CommunicationException(Exceptions.CONNECTION_PROBLEM);
         }
     }
 
