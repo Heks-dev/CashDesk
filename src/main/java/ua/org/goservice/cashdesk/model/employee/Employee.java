@@ -9,6 +9,7 @@ import ua.org.goservice.cashdesk.model.communication.RequestExecutor;
 import ua.org.goservice.cashdesk.model.communication.request.Filter;
 import ua.org.goservice.cashdesk.model.communication.request.FilterSet;
 import ua.org.goservice.cashdesk.model.communication.request.RequestBuilder;
+import ua.org.goservice.cashdesk.model.exception.ActionDeniedException;
 import ua.org.goservice.cashdesk.model.exception.Exceptions;
 import ua.org.goservice.cashdesk.model.util.json.JsonAgent;
 import ua.org.goservice.cashdesk.model.util.json.JsonFormat;
@@ -21,13 +22,19 @@ public class Employee implements Loadable {
     private WorkplaceInformation workplaceInformation;
 
     @Override
-    public void loadData(String[] params) {
+    public void loadData(String...params) {
+        checkLoggedIn();
         verifyParams(params);
         requestExecutor.sendRequest(new RequestBuilder(ApiUrl.AUTHORIZATION, ApiVal.AUTH,
                 new FilterSet(new Filter(ApiFilter.PASSWORD, params[PASSWORD_PARAM_INDEX]))));
         String json = requestExecutor.getResponse();
         employeeInformation = JsonAgent.deserialize(json, EmployeeInformation.class, JsonFormat.SINGLE_OBJECT);
         workplaceInformation = JsonAgent.deserialize(json, WorkplaceInformation.class, JsonFormat.SINGLE_OBJECT);
+    }
+
+    private void checkLoggedIn() {
+        boolean isLoggedIn = employeeInformation != null && workplaceInformation != null;
+        if (isLoggedIn) throw new ActionDeniedException(Exceptions.EMPLOYEE_ALREADY_LOGGED);
     }
 
     private void verifyParams(String[] params) {
