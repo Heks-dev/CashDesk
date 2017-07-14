@@ -15,6 +15,7 @@ import ua.org.goservice.cashdesk.model.util.json.JsonFormat;
 
 public class Employee implements Loadable {
 
+    private final static int PASSWORD_PARAM_INDEX = 0;
     private final RequestExecutor requestExecutor = new HttpRequestExecutor();
     private EmployeeInformation employeeInformation;
     private WorkplaceInformation workplaceInformation;
@@ -22,10 +23,8 @@ public class Employee implements Loadable {
     @Override
     public void loadData(String[] params) {
         verifyParams(params);
-        String password = params[0];
         requestExecutor.sendRequest(new RequestBuilder(ApiUrl.AUTHORIZATION, ApiVal.AUTH,
-                new FilterSet(
-                        new Filter(ApiFilter.PASSWORD, password))));
+                new FilterSet(new Filter(ApiFilter.PASSWORD, params[PASSWORD_PARAM_INDEX]))));
         String json = requestExecutor.getResponse();
         employeeInformation = JsonAgent.deserialize(json, EmployeeInformation.class, JsonFormat.SINGLE_OBJECT);
         workplaceInformation = JsonAgent.deserialize(json, WorkplaceInformation.class, JsonFormat.SINGLE_OBJECT);
