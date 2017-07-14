@@ -8,4 +8,6 @@ public final class Exceptions {
     public static final String UNDEFINED_JSON_FORMAT = loader.getValue("undefined.json.format");
 
     public static final String CONNECTION_PROBLEM = loader.getValue("connection.problem");
+
+    public static final String WRONG_ARGUMENTS_NUMBER = loader.getValue("wrong.args.num");
 }

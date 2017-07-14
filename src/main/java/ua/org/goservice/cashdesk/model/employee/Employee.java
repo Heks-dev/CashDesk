@@ -9,6 +9,7 @@ import ua.org.goservice.cashdesk.model.communication.RequestExecutor;
 import ua.org.goservice.cashdesk.model.communication.request.Filter;
 import ua.org.goservice.cashdesk.model.communication.request.FilterSet;
 import ua.org.goservice.cashdesk.model.communication.request.RequestBuilder;
+import ua.org.goservice.cashdesk.model.exception.Exceptions;
 import ua.org.goservice.cashdesk.model.util.json.JsonAgent;
 import ua.org.goservice.cashdesk.model.util.json.JsonFormat;
 
@@ -32,7 +33,7 @@ public class Employee implements Loadable {
 
     private void verifyParams(String[] params) {
         if (params.length != 1) {
-            throw new IllegalArgumentException("Неверное количество аргументов.");
+            throw new IllegalArgumentException(Exceptions.WRONG_ARGUMENTS_NUMBER);
         }
     }
 
