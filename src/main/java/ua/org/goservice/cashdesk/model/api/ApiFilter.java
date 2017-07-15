@@ -1,4 +1,4 @@
-package ua.org.goservice.cashdesk.model.api.impl;
+package ua.org.goservice.cashdesk.model.api;
 
 import ua.org.goservice.cashdesk.model.api.ReadableFilter;
 

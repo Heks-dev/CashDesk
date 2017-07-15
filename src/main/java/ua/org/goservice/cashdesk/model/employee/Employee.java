@@ -1,9 +1,9 @@
 package ua.org.goservice.cashdesk.model.employee;
 
 import ua.org.goservice.cashdesk.model.Loadable;
-import ua.org.goservice.cashdesk.model.api.impl.ApiVal;
-import ua.org.goservice.cashdesk.model.api.impl.ApiFilter;
-import ua.org.goservice.cashdesk.model.api.impl.ApiUrl;
+import ua.org.goservice.cashdesk.model.api.ApiVal;
+import ua.org.goservice.cashdesk.model.api.ApiFilter;
+import ua.org.goservice.cashdesk.model.api.ApiUrl;
 import ua.org.goservice.cashdesk.model.communication.HttpRequestExecutor;
 import ua.org.goservice.cashdesk.model.communication.RequestExecutor;
 import ua.org.goservice.cashdesk.model.communication.request.Filter;
