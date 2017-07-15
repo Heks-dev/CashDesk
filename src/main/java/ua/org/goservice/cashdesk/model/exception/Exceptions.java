@@ -12,4 +12,6 @@ public final class Exceptions {
     public static final String WRONG_ARGUMENTS_NUMBER = loader.getValue("wrong.args.num");
 
     public static final String EMPLOYEE_ALREADY_LOGGED = loader.getValue("employee.already.logged");
+
+    public static final String WRONG_PASSWORD_FORMAT = loader.getValue("wrong.password.format");
 }

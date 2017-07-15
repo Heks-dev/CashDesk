@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import com.jfoenix.controls.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="550.0" style="-fx-background-color: #6899D3;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ua.org.goservice.cashdesk.controller.auth.SignInController">
+   <children>
+      <Pane prefHeight="200.0" prefWidth="150.0" style="-fx-background-color: #4284D3;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <ImageView fitHeight="32.0" fitWidth="32.0" layoutX="59.0" layoutY="184.0" pickOnBounds="true" preserveRatio="true">
+               <viewport>
+                  <Rectangle2D height="32.0" width="32.0" />
+               </viewport>
+               <image>
+                  <Image url="@/assets/icon/key-small.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
+      <JFXButton focusTraversable="false" layoutX="300.0" layoutY="224.0" onAction="#handleSignIn" prefWidth="90.0" style="-fx-background-color: #4284D3;" text="Войти" textFill="#4d4d4d" AnchorPane.bottomAnchor="140.0" AnchorPane.rightAnchor="155.0">
+         <font>
+            <Font size="19.0" />
+         </font>
+      </JFXButton>
+      <JFXPasswordField fx:id="passwordField" layoutX="220.0" layoutY="167.0" onAction="#handleSignIn" style="-fx-prompt-text-fill: white;" styleClass="password-field" AnchorPane.leftAnchor="220.0" AnchorPane.rightAnchor="70.0" AnchorPane.topAnchor="160.0">
+         <font>
+            <Font size="21.0" />
+         </font>
+      </JFXPasswordField>
+      <ImageView fitHeight="64.0" fitWidth="64.0" layoutX="318.0" layoutY="79.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="168.0" AnchorPane.topAnchor="80.0">
+         <image>
+            <Image url="@/assets/icon/user-medium.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="220.0" layoutY="144.0" text="Пароль:" textFill="#4d4d4d" AnchorPane.rightAnchor="275.0" AnchorPane.topAnchor="145.0" />
+      <Text fx:id="errorMessageText" fill="#ff5c00" layoutX="329.0" layoutY="383.0" lineSpacing="10.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Error message text" textAlignment="CENTER" wrappingWidth="350.0" AnchorPane.bottomAnchor="25.0" AnchorPane.rightAnchor="25.0" />
+   </children>
+</AnchorPane>
