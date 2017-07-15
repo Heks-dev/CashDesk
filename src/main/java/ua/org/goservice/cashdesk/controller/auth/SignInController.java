@@ -3,10 +3,13 @@ package ua.org.goservice.cashdesk.controller.auth;
 import com.jfoenix.controls.JFXPasswordField;
 import javafx.fxml.FXML;
 import javafx.scene.text.Text;
+import ua.org.goservice.cashdesk.controller.Authorizable;
 import ua.org.goservice.cashdesk.model.exception.AuthorizationFailedException;
 import ua.org.goservice.cashdesk.model.util.Validator;
 
 public class SignInController {
+    static final String SIGN_IN_LOCATION = "/view/signIn.fxml";
+    static final String SIGN_IN_TITLE = "Авторизация в системе";
     @FXML
     private JFXPasswordField passwordField;
     @FXML

@@ -3,7 +3,6 @@ package ua.org.goservice.cashdesk.controller;
 import javafx.stage.Stage;
 import ua.org.goservice.cashdesk.controller.auth.AuthCaller;
 import ua.org.goservice.cashdesk.controller.auth.AuthSceneAssistant;
-import ua.org.goservice.cashdesk.controller.auth.Authorizable;
 import ua.org.goservice.cashdesk.model.employee.Employee;
 
 public class WindowController implements Launcher, Authorizable {
