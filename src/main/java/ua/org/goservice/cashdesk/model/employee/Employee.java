@@ -13,11 +13,14 @@ import ua.org.goservice.cashdesk.model.exception.ActionDeniedException;
 import ua.org.goservice.cashdesk.model.exception.Exceptions;
 import ua.org.goservice.cashdesk.model.util.json.JsonAgent;
 import ua.org.goservice.cashdesk.model.util.json.JsonFormat;
+import ua.org.goservice.cashdesk.model.util.Validator;
 
 public class Employee implements Loadable {
 
     private final static int PASSWORD_PARAM_INDEX = 0;
     private final RequestExecutor requestExecutor = new HttpRequestExecutor();
+    private final Validator<String> validator = new EmployeeResponseValidator();
+
     private EmployeeInformation employeeInformation;
     private WorkplaceInformation workplaceInformation;
 
@@ -28,6 +31,7 @@ public class Employee implements Loadable {
         requestExecutor.sendRequest(new RequestBuilder(ApiUrl.AUTHORIZATION, ApiVal.AUTH,
                 new FilterSet(new Filter(ApiFilter.PASSWORD, params[PASSWORD_PARAM_INDEX]))));
         String json = requestExecutor.getResponse();
+        validator.validate(json);
         employeeInformation = JsonAgent.deserialize(json, EmployeeInformation.class, JsonFormat.SINGLE_OBJECT);
         workplaceInformation = JsonAgent.deserialize(json, WorkplaceInformation.class, JsonFormat.SINGLE_OBJECT);
     }

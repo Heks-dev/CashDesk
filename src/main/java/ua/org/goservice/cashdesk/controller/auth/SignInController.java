@@ -2,47 +2,46 @@ package ua.org.goservice.cashdesk.controller.auth;
 
 import com.jfoenix.controls.JFXPasswordField;
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
 import javafx.scene.text.Text;
-import ua.org.goservice.cashdesk.model.employee.Employee;
-import ua.org.goservice.cashdesk.model.exception.ActionDeniedException;
-import ua.org.goservice.cashdesk.model.exception.Exceptions;
+import ua.org.goservice.cashdesk.model.exception.AuthorizationFailedException;
+import ua.org.goservice.cashdesk.model.util.Validator;
 
 public class SignInController {
-    private static final String PASSWORD_EXP = "[^\\W_]{5,16}";
     @FXML
     private JFXPasswordField passwordField;
     @FXML
     private Text errorMessageText;
 
-    private String provenPass;
+    private Authorizable assistant;
+    private Validator<String> validator;
 
     @FXML
     private void handleSignIn() {
         if (errorMessageText.isVisible()) errorMessageText.setVisible(false);
         if (passwordField.getText().isEmpty()) return;
         try {
-            parsePassword();
-            Employee employee = new Employee();
-            employee.loadData(passwordField.getText());
-        } catch (ActionDeniedException e) {
+            validator.validate(passwordField.getText());
+            assistant.authorize();
+        } catch (AuthorizationFailedException e) {
             activateErrorMessage(e);
         }
     }
 
-    private void parsePassword() {
-        if (!passwordField.getText().matches(PASSWORD_EXP)) {
-            throw new ActionDeniedException(Exceptions.WRONG_PASSWORD_FORMAT);
-        }
-    }
-
-    private void activateErrorMessage(ActionDeniedException e) {
+    private void activateErrorMessage(AuthorizationFailedException e) {
         errorMessageText.setText(e.getMessage());
         errorMessageText.setVisible(true);
     }
 
+    /**
+     *  method initialize() - Используется загрузчиком FXMLLoader
+     */
     @FXML
-    private void initialize() {
+    public void initialize() {
         errorMessageText.setVisible(false);
+    }
+
+    void setDependencies(Authorizable assistant, Validator<String> validator) {
+        this.assistant = assistant;
+        this.validator = validator;
     }
 }

@@ -22,12 +22,12 @@
             </ImageView>
          </children>
       </Pane>
-      <JFXButton focusTraversable="false" layoutX="300.0" layoutY="224.0" onAction="#handleSignIn" prefWidth="90.0" style="-fx-background-color: #4284D3;" text="Войти" textFill="#4d4d4d" AnchorPane.bottomAnchor="140.0" AnchorPane.rightAnchor="155.0">
+      <JFXButton focusTraversable="false" layoutX="300.0" layoutY="224.0" onAction="#handleSignIn" prefWidth="90.0" style="-fx-background-color: #4284D3;" text="Войти" textFill="#4d4d4d" AnchorPane.bottomAnchor="130.0" AnchorPane.rightAnchor="155.0">
          <font>
             <Font size="19.0" />
          </font>
       </JFXButton>
-      <JFXPasswordField fx:id="passwordField" layoutX="220.0" layoutY="167.0" onAction="#handleSignIn" style="-fx-prompt-text-fill: white;" styleClass="password-field" AnchorPane.leftAnchor="220.0" AnchorPane.rightAnchor="70.0" AnchorPane.topAnchor="160.0">
+      <JFXPasswordField fx:id="passwordField" alignment="CENTER" layoutX="220.0" layoutY="167.0" onAction="#handleSignIn" style="-fx-prompt-text-fill: white;" styleClass="password-field" AnchorPane.leftAnchor="220.0" AnchorPane.rightAnchor="70.0" AnchorPane.topAnchor="170.0">
          <font>
             <Font size="21.0" />
          </font>
@@ -37,7 +37,7 @@
             <Image url="@/assets/icon/user-medium.png" />
          </image>
       </ImageView>
-      <Label layoutX="220.0" layoutY="144.0" text="Пароль:" textFill="#4d4d4d" AnchorPane.rightAnchor="275.0" AnchorPane.topAnchor="145.0" />
+      <Label layoutX="220.0" layoutY="144.0" text="Пароль:" textFill="#4d4d4d" AnchorPane.rightAnchor="275.0" AnchorPane.topAnchor="155.0" />
       <Text fx:id="errorMessageText" fill="#ff5c00" layoutX="329.0" layoutY="383.0" lineSpacing="10.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Error message text" textAlignment="CENTER" wrappingWidth="350.0" AnchorPane.bottomAnchor="25.0" AnchorPane.rightAnchor="25.0" />
    </children>
 </AnchorPane>
