@@ -23,6 +23,7 @@ public class WindowController implements Launcher, Authorizable {
     @Override
     public void authorize() {
         Employee employee = authCaller.getEmployee();
+        System.out.println(employee.getId());
     }
 
     private boolean isNotEmptyPrimaryStage() {

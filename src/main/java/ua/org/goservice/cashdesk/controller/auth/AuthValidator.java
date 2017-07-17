@@ -1,16 +1,15 @@
 package ua.org.goservice.cashdesk.controller.auth;
 
-import ua.org.goservice.cashdesk.model.Loadable;
 import ua.org.goservice.cashdesk.model.employee.Employee;
 import ua.org.goservice.cashdesk.model.exception.AuthorizationFailedException;
 import ua.org.goservice.cashdesk.model.exception.Exceptions;
 import ua.org.goservice.cashdesk.model.util.Validator;
 
 class AuthValidator implements Validator<String> {
-    private static final String PASSWORD_CONVENTION = "[^\\W_]+";
+    private static final String PASSWORD_CONVENTION = "[^\\W_]{3,16}";
 
     private String provenPass;
-    private Loadable loadable;
+    private Employee employee;
 
     @Override
     public void validate(String val) {
@@ -24,8 +23,7 @@ class AuthValidator implements Validator<String> {
     }
 
     private void loadNewAccount(String val) {
-        loadable = new Employee();
-        loadable.loadData(val);
+        employee = new Employee(val);
         provenPass = val;
     }
 
@@ -47,7 +45,7 @@ class AuthValidator implements Validator<String> {
             provenPass = null;
     }
 
-    Loadable getLoadable() {
-        return loadable;
+    Employee getLoadedEmploy() {
+        return employee;
     }
 }

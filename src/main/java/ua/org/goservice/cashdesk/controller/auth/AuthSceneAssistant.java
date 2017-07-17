@@ -10,6 +10,7 @@ import ua.org.goservice.cashdesk.model.employee.Employee;
 import java.io.IOException;
 
 public class AuthSceneAssistant implements Authorizable, AuthCaller {
+
     private final AuthValidator validator = new AuthValidator();
     private final Stage primaryStage;
     private final Authorizable windowController;
@@ -40,7 +41,7 @@ public class AuthSceneAssistant implements Authorizable, AuthCaller {
     }
 
     public Employee getEmployee() {
-        return (Employee) validator.getLoadable();
+        return validator.getLoadedEmploy();
     }
 
     private void loadSignInScene() {
