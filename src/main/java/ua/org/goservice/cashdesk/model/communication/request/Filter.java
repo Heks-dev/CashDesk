@@ -7,6 +7,10 @@ public class Filter {
     private final ReadableFilter apiFilter;
     private final Object val;
 
+    public Filter(ReadableFilter apiFilter) {
+        this(apiFilter, null);
+    }
+
     public Filter(ReadableFilter apiFilter, Object val) {
         this.apiFilter = apiFilter;
         this.val = val;

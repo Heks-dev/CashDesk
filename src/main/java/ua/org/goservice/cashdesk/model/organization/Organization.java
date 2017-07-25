@@ -29,4 +29,31 @@ public class Organization {
     public String getType() {
         return type;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Organization that = (Organization) o;
+
+        if (id != null ? !id.equals(that.id) : that.id != null) return false;
+        if (name != null ? !name.equals(that.name) : that.name != null) return false;
+        if (priceid != null ? !priceid.equals(that.priceid) : that.priceid != null) return false;
+        return type != null ? type.equals(that.type) : that.type == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (priceid != null ? priceid.hashCode() : 0);
+        result = 31 * result + (type != null ? type.hashCode() : 0);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return name + " " + id;
+    }
 }

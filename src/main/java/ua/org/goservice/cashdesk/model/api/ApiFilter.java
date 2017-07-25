@@ -1,10 +1,12 @@
 package ua.org.goservice.cashdesk.model.api;
 
-import ua.org.goservice.cashdesk.model.api.ReadableFilter;
-
 public enum ApiFilter implements ReadableFilter {
     PASSWORD("password"),
-    ID("id");
+    ID("id"),
+    BUYERS("type.buyer"),
+    STORE_ID("storeid"),
+    PRICE_ID("priceid"),
+    BARCODE("barcode");
 
     private final String value;
 

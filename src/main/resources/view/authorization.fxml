@@ -8,7 +8,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="550.0" style="-fx-background-color: #40403E;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ua.org.goservice.cashdesk.controller.auth.SignInController">
+<AnchorPane prefHeight="400.0" prefWidth="550.0" style="-fx-background-color: #40403E;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ua.org.goservice.cashdesk.controller.auth.AuthorizationController">
    <children>
       <Pane id=" #40403E" prefHeight="200.0" prefWidth="150.0" style="-fx-background-color: #4E74A6;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import com.jfoenix.controls.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane prefHeight="200.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ua.org.goservice.cashdesk.controller.cashdesk.sale.ProductCountDialogController">
+   <children>
+      <JFXTextField fx:id="countField" alignment="CENTER" layoutX="136.0" layoutY="73.0" onAction="#handleConfirm" prefHeight="30.0" promptText="Введите количество" AnchorPane.leftAnchor="70.0" AnchorPane.rightAnchor="70.0" AnchorPane.topAnchor="75.0">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </JFXTextField>
+      <JFXButton layoutX="163.0" layoutY="125.0" onAction="#handleConfirm" prefHeight="30.0" text="Подтвердить" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="160.0" AnchorPane.rightAnchor="160.0">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </JFXButton>
+      <Label layoutX="314.0" layoutY="41.0" text="Доступное количество:" AnchorPane.leftAnchor="70.0" AnchorPane.topAnchor="40.0" />
+      <Label fx:id="availableCount" layoutX="324.0" layoutY="51.0" text="1" AnchorPane.rightAnchor="70.0" AnchorPane.topAnchor="40.0" />
+   </children>
+</AnchorPane>

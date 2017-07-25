@@ -19,4 +19,8 @@ public final class Exceptions {
     public static final String WRONG_PASSWORD = loader.getValue("wrong.password");
 
     public static final String UNLOCK_FAILED = loader.getValue("unlock.failed");
+
+    public static final String NON_EXISTENT_BUYER = loader.getValue("non.existent.buyer");
+
+    public static final String PRODUCT_NOT_FOUND = loader.getValue("product.not.found");
 }

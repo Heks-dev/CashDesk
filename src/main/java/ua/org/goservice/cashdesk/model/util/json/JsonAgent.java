@@ -12,6 +12,10 @@ public class JsonAgent {
         return gson.fromJson(json, classOf);
     }
 
+    public static <T> T deserialize(String json, Token token) {
+        return gson.fromJson(json, token.getType());
+    }
+
     private static String formatting(String json, JsonFormat format) {
         switch (format) {
             case UNCHANGED:
