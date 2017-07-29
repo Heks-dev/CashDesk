@@ -38,7 +38,7 @@ public class OrganizationManager {
                         new Filter(ApiFilter.ID, employeeOrg))));
         String orgJson = requestExecutor.getResponse();
         our = JsonAgent.deserialize(orgJson, Organization.class, JsonFormat.SINGLE_OBJECT);
-        // debug
+        // todo debug
         System.out.println(getClass().getSimpleName() + " <<our organization>> " + our);
     }
 
@@ -51,18 +51,18 @@ public class OrganizationManager {
         String json = requestExecutor.getResponse();
         System.out.println(json);
         currentBuyer = JsonAgent.deserialize(json, Organization.class, JsonFormat.SINGLE_OBJECT);
-        // debug
+        // todo debug
         System.out.println(getClass().getSimpleName() + " <<current buyer organization>> " + currentBuyer);
     }
 
-    private void syncBuyers() {
+    public void syncBuyers() {
         requestExecutor.sendRequest(new RequestBuilder(ApiUrl.ORGANIZATION, ApiVal.LIST,
                 new FilterSet(
                         new Filter(ApiFilter.BUYERS))));
         String buyersJson = requestExecutor.getResponse();
         List<Organization> buyersList = JsonAgent.deserialize(buyersJson, Token.ORGANIZATION_LIST);
         buyers.setAll(buyersList);
-        // debug
+        // todo debug
         System.out.println(buyers);
     }
 

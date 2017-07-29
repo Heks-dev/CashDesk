@@ -11,7 +11,7 @@ import ua.org.goservice.cashdesk.model.util.Validator;
 import java.math.BigDecimal;
 
 public class ProductCountDialogController {
-    static final String LOCATION = "/view/cashdesk/productCountDialog.fxml";
+    static final String LOCATION = "/view/cashdesk/sale/productCountDialog.fxml";
     static final String TITLE = "Указать количество";
     private static final String COMMA_SEPARATOR = ".+(,).+";
     @FXML
@@ -27,6 +27,7 @@ public class ProductCountDialogController {
     @FXML
     private void handleConfirm() {
         try {
+            if (countField.getText().length() == 0) return;
             String input = countField.getText();
             validator.validate(input);
             setDesiredCount(input);
@@ -58,5 +59,6 @@ public class ProductCountDialogController {
         this.dialog = dialog;
         this.validator = validator;
         availableCount.setText(available.toString());
+        // todo esc key listener
     }
 }

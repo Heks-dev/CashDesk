@@ -1,4 +1,4 @@
-package ua.org.goservice.cashdesk.controller.cashdesk.sale;
+package ua.org.goservice.cashdesk.controller.cashdesk.sale.validator;
 
 import ua.org.goservice.cashdesk.model.util.Validator;
 
@@ -21,7 +21,7 @@ public class ProductCountValidator implements Validator<String> {
         this(measure, null);
     }
 
-    ProductCountValidator(String measure, BigDecimal available) {
+    public ProductCountValidator(String measure, BigDecimal available) {
         this.measure = measure;
         this.available = available;
     }

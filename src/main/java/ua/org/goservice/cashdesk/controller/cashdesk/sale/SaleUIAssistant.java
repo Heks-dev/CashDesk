@@ -100,4 +100,8 @@ public class SaleUIAssistant {
     public void setDiscountCardBalance(String value) {
         discountCardBalance.setValue(value);
     }
+
+    public void clearDraftArea() {
+
+    }
 }

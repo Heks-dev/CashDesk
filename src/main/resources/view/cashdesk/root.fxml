@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import com.jfoenix.controls.*?>
@@ -8,29 +9,37 @@
 
 <BorderPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ua.org.goservice.cashdesk.controller.cashdesk.RootController">
    <top>
-      <DecorationPane prefHeight="50.0" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="40.0" styleClass="tool-container" BorderPane.alignment="CENTER">
          <children>
-            <GridPane>
+            <HBox alignment="CENTER" layoutX="62.0" layoutY="-30.0" prefHeight="100.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0">
                <children>
-                  <JFXButton onAction="#handleSynchronize" prefHeight="30.0" prefWidth="180.0" style="-fx-background-color: #4E74A6;" text="Синхронизация" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" />
-                  <JFXButton onAction="#handleRefund" prefHeight="30.0" prefWidth="180.0" style="-fx-background-color: #4E74A6;" text="Возврат по чеку" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" />
-                  <JFXButton onAction="#handleBlockScreen" prefHeight="30.0" prefWidth="180.0" style="-fx-background-color: #4E74A6;" text="Блокировать экран" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" />
-                  <JFXButton onAction="#handleLogOut" prefHeight="30.0" prefWidth="180.0" style="-fx-background-color: #4E74A6;" text="Сменить пользователя" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" />
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+                     <children>
+                        <JFXButton alignment="CENTER" layoutX="36.0" layoutY="4.0" onAction="#handleSynchronize" text="Синхронизация" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+                     <children>
+                        <JFXButton alignment="CENTER" layoutX="69.0" layoutY="4.0" onAction="#handleLockScreen" text="Блокировать экран" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+                     <children>
+                        <JFXButton alignment="CENTER" layoutX="62.0" layoutY="2.0" onAction="#handleLogOut" text="Сменить пользователя" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                     </children>
+                  </AnchorPane>
                </children>
-               <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-               </columnConstraints>
-               <rowConstraints>
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-               </rowConstraints>
-            </GridPane>
+            </HBox>
          </children>
-      </DecorationPane>
+      </AnchorPane>
    </top>
    <center>
-      <Accordion fx:id="accordion" BorderPane.alignment="CENTER" />
+      <TabPane fx:id="tabPane" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+         <tabs>
+            <Tab fx:id="saleTab" closable="false" text="Продажи" />
+            <Tab closable="false" text="Дисконтные карты" />
+            <Tab closable="false" text="Возврат товара" />
+            <Tab closable="false" text="Отчеты" />
+         </tabs></TabPane>
    </center>
 </BorderPane>

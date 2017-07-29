@@ -20,7 +20,7 @@ public class MainApp extends Application implements Continuer {
 
     @Override
     public void followUp(Employee employee) {
-        deskManager.startCashDesk(employee);
+        deskManager.start(employee);
     }
 
     public static void main(String[] args) {

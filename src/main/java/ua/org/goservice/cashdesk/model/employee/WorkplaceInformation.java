@@ -1,6 +1,7 @@
 package ua.org.goservice.cashdesk.model.employee;
 
 final class WorkplaceInformation {
+
     private final Integer cityid;
     private final Integer storeid;
     private final Integer kassaid;

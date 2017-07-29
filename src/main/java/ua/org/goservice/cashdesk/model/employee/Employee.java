@@ -1,34 +1,14 @@
 package ua.org.goservice.cashdesk.model.employee;
 
-import ua.org.goservice.cashdesk.model.api.ApiVal;
-import ua.org.goservice.cashdesk.model.api.ApiFilter;
-import ua.org.goservice.cashdesk.model.api.ApiUrl;
-import ua.org.goservice.cashdesk.model.communication.HttpRequestExecutor;
-import ua.org.goservice.cashdesk.model.communication.RequestExecutor;
-import ua.org.goservice.cashdesk.model.communication.request.Filter;
-import ua.org.goservice.cashdesk.model.communication.request.FilterSet;
-import ua.org.goservice.cashdesk.model.communication.request.RequestBuilder;
 import ua.org.goservice.cashdesk.model.util.json.JsonAgent;
 import ua.org.goservice.cashdesk.model.util.json.JsonFormat;
-import ua.org.goservice.cashdesk.model.util.Validator;
 
 public class Employee {
-
-    private final RequestExecutor requestExecutor = new HttpRequestExecutor();
-    private final Validator<String> validator = new EmployeeResponseValidator();
 
     private EmployeeInformation employeeInformation;
     private WorkplaceInformation workplaceInformation;
 
-    public Employee(String password) {
-        login(password);
-    }
-
-    private void login(String password) {
-        requestExecutor.sendRequest(new RequestBuilder(ApiUrl.AUTHORIZATION, ApiVal.AUTH,
-                new FilterSet(new Filter(ApiFilter.PASSWORD, password))));
-        String json = requestExecutor.getResponse();
-        validator.validate(json);
+    public Employee(String json) {
         employeeInformation = JsonAgent.deserialize(json, EmployeeInformation.class, JsonFormat.SINGLE_OBJECT);
         workplaceInformation = JsonAgent.deserialize(json, WorkplaceInformation.class, JsonFormat.SINGLE_OBJECT);
     }

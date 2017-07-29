@@ -18,12 +18,12 @@ public class DraftEntry {
     private final ObjectProperty<BigDecimal> count;
     private final ObjectProperty<BigDecimal> totalSum;
 
-    public DraftEntry(Product product, Double count) {
+    public DraftEntry(Product product, BigDecimal count) {
         this.barcode = new SimpleStringProperty(product.getBarcode());
         this.name = new SimpleStringProperty(product.getName());
         this.measure = new SimpleStringProperty(product.getMeasures());
         this.price = new SimpleObjectProperty<>(product.getPrice());
-        this.count = new SimpleObjectProperty<>(new BigDecimal(count));
+        this.count = new SimpleObjectProperty<>(count);
         this.totalSum = new SimpleObjectProperty<>(new BigDecimal(0));
         calculateTotalSum();
     }
@@ -76,8 +76,8 @@ public class DraftEntry {
         return totalSum;
     }
 
-    public void addQuantity(Double count) {
-        this.count.setValue(this.count.getValue().add(BigDecimal.valueOf(count))
+    public void addQuantity(BigDecimal count) {
+        this.count.setValue(this.count.getValue().add(count)
                 .setScale(2, RoundingMode.HALF_UP));
         calculateTotalSum();
     }

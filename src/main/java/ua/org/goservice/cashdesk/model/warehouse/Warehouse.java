@@ -23,72 +23,42 @@ import java.util.Map;
 public class Warehouse {
 
     private final RequestExecutor requestExecutor = new HttpRequestExecutor();
-    private ObservableList<Product> products = FXCollections.observableArrayList();
+    private final Integer storeid;
+    private ObservableList<Product> priceList = FXCollections.observableArrayList();
     private Map<String, Product> namedProductStorage;
-    private Map<String, SalePrice> barcodePriceStorage;
 
-    public Warehouse(Integer storeid, Integer priceid, Organization currentBuyer) {
-        syncProducts(storeid, priceid);
-        mappingProductsWithProductName(products);
-        loadCurrentPriceList(currentBuyer, storeid);
+    public Warehouse(Integer storeid, Organization currentBuyer) {
+        this.storeid = storeid;
+        syncPriceList(currentBuyer);
     }
 
-    public void syncStoreProducts(Integer storeid, Integer priceid) {
-        syncProducts(storeid, priceid);
-        mappingProductsWithProductName(products);
+    public void syncPriceList(Organization currentBuyer) {
+        sync(currentBuyer);
+        mappingProductsWithProductName();
     }
 
-    private void syncProducts(Integer storeid, Integer priceid) {
+    private void sync(Organization currentBuyer) {
         requestExecutor.sendRequest(new RequestBuilder(ApiUrl.STOREHOUSE, ApiVal.LIST,
                 new FilterSet(
                         new Filter(ApiFilter.STORE_ID, storeid),
-                        new Filter(ApiFilter.PRICE_ID, priceid)
+                        new Filter(ApiFilter.PRICE_ID, currentBuyer.getPriceid())
                 )));
         String json = requestExecutor.getResponse();
-        // debug
+        // todo debug
         System.out.println(json);
         List<Product> productList = JsonAgent.deserialize(json, Token.PRODUCT_LIST);
-        products.setAll(productList);
+        priceList.setAll(productList);
     }
 
-    private void mappingProductsWithProductName(ObservableList<Product> products) {
+    private void mappingProductsWithProductName() {
         namedProductStorage = new HashMap<>();
-        for (Product product : products) {
+        for (Product product : priceList) {
             namedProductStorage.put(product.toString(), product);
-        }
-    }
-
-    public void loadCurrentBuyerPriceList(Organization currentBuyer, Integer storeid) {
-        loadCurrentPriceList(currentBuyer, storeid);
-    }
-
-    private void loadCurrentPriceList(Organization currentBuyer, Integer storeid) {
-        // todo validation current buyer
-        requestExecutor.sendRequest(new RequestBuilder(ApiUrl.STOREHOUSE, ApiVal.LIST,
-                new FilterSet(
-                        new Filter(ApiFilter.PRICE_ID, currentBuyer.getPriceid()),
-                        new Filter(ApiFilter.STORE_ID, storeid)
-                )));
-        String json = requestExecutor.getResponse();
-        // debug
-        System.out.println(json);
-        List<SalePrice> priceList = JsonAgent.deserialize(json, Token.SALE_PRICE_LIST);
-        mappingSalePriceWithBarcode(priceList);
-    }
-
-    private void mappingSalePriceWithBarcode(List<SalePrice> priceList) {
-        barcodePriceStorage = new HashMap<>();
-        for (SalePrice salePrice : priceList) {
-            barcodePriceStorage.put(salePrice.getBarcode(), salePrice);
         }
     }
 
     public Product getProductByName(String name) {
         return namedProductStorage.get(name);
-    }
-
-    public SalePrice getPriceByBarcode(String barcode) {
-        return barcodePriceStorage.get(barcode);
     }
 
     public BigDecimal getActualProductCount(Product product) {
@@ -99,12 +69,13 @@ public class Warehouse {
                         new Filter(ApiFilter.BARCODE, product.getBarcode())
                 )));
         String json = requestExecutor.getResponse();
+        // todo debug
         System.out.println(json);
         Product newedProductInfo = JsonAgent.deserialize(json, Product.class, JsonFormat.SINGLE_OBJECT);
         return newedProductInfo.getCount();
     }
 
-    public ObservableList<Product> getProducts() {
-        return FXCollections.unmodifiableObservableList(products);
+    public ObservableList<Product> getPriceList() {
+        return FXCollections.unmodifiableObservableList(priceList);
     }
 }

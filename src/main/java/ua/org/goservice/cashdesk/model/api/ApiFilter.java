@@ -6,7 +6,8 @@ public enum ApiFilter implements ReadableFilter {
     BUYERS("type.buyer"),
     STORE_ID("storeid"),
     PRICE_ID("priceid"),
-    BARCODE("barcode");
+    BARCODE("barcode"),
+    DISCOUNT_CARD_NUM("bonus.card.num");
 
     private final String value;
 

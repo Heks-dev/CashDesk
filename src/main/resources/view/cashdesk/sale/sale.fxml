@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import impl.org.controlsfx.skin.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import com.jfoenix.controls.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane styleClass="container" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ua.org.goservice.cashdesk.controller.cashdesk.sale.SaleController">
+   <children>
+      <DecorationPane alignment="CENTER_LEFT" layoutX="332.0" layoutY="14.0" prefHeight="40.0" styleClass="title-container" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Продажа">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Text>
+         </children>
+         <padding>
+            <Insets left="30.0" />
+         </padding>
+      </DecorationPane>
+      <JFXTextField fx:id="productSearchField" focusColor="#4db2ec" layoutX="108.0" layoutY="94.0" onAction="#handleAddToDraft" AnchorPane.leftAnchor="106.0" AnchorPane.rightAnchor="450.0" AnchorPane.topAnchor="60.0">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </JFXTextField>
+      <Label layoutX="37.0" layoutY="66.0" text="Поиск:" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="60.0" />
+      <JFXComboBox fx:id="buyersChoiceBox" focusColor="#4db2ec" layoutX="553.0" layoutY="68.0" prefHeight="27.0" prefWidth="250.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="60.0" />
+      <Label layoutX="445.0" layoutY="60.0" text="Контрагент:" AnchorPane.rightAnchor="310.0" AnchorPane.topAnchor="60.0" />
+      <TableView fx:id="productTable" layoutX="300.0" layoutY="121.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="250.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="107.0">
+        <columns>
+          <TableColumn fx:id="barcodeColumn" maxWidth="3500.0" prefWidth="75.0" text="Код" />
+          <TableColumn fx:id="nameColumn" maxWidth="7000.0" prefWidth="75.0" text="Наименование" />
+            <TableColumn fx:id="measureColumn" maxWidth="2000.0" prefWidth="75.0" text="Ед. Изм." />
+            <TableColumn fx:id="priceColumn" maxWidth="2500.0" prefWidth="75.0" text="Цена" />
+            <TableColumn fx:id="countColumn" maxWidth="2000.0" prefWidth="75.0" text="Кол-во" />
+            <TableColumn fx:id="totalResultColumn" maxWidth="3000.0" prefWidth="75.0" text="Итого" />
+        </columns>
+         <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+         </columnResizePolicy>
+      </TableView>
+      <HBox layoutX="30.0" layoutY="363.0" prefHeight="35.0" prefWidth="200.0" AnchorPane.bottomAnchor="210.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0">
+         <children>
+            <AnchorPane styleClass="tool-container" HBox.hgrow="ALWAYS">
+               <children>
+                  <JFXButton layoutX="93.0" layoutY="2.0" onAction="#handleCancelCheck" text="Отмена чека" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0" />
+               </children>
+               <padding>
+                  <Insets left="1.0" />
+               </padding>
+            </AnchorPane>
+            <AnchorPane styleClass="tool-container" HBox.hgrow="ALWAYS">
+               <children>
+                  <JFXButton layoutX="61.0" layoutY="10.0" onAction="#handleCompleteCheck" text="Закрыть чек" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0" />
+               </children>
+               <padding>
+                  <Insets right="1.0" />
+               </padding>
+            </AnchorPane>
+         </children>
+      </HBox>
+      <GridPane hgap="15.0" layoutX="212.0" layoutY="401.0" vgap="5.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0">
+        <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label text="Сумма чека:" GridPane.halignment="RIGHT" />
+            <Label text="Скидка:" GridPane.columnIndex="2" GridPane.halignment="RIGHT" />
+            <Label text="Начислено:" wrapText="true" GridPane.columnIndex="4" GridPane.halignment="RIGHT" />
+            <Label fx:id="checkSum" text="0.00" GridPane.columnIndex="1">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Label>
+            <Label fx:id="discountRate" text="0.00" GridPane.columnIndex="3">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Label>
+            <Label fx:id="bonusesAccrued" text="0.00" GridPane.columnIndex="5">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Label>
+            <Label text="Наличные:" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
+            <Label text="Терминал:" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
+            <Label text="Бонусы:" GridPane.columnIndex="4" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
+            <JFXTextField fx:id="contributedCashFund" focusColor="#4db2ec" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="1">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </JFXTextField>
+            <JFXTextField fx:id="contributedTerminalFund" focusColor="#4db2ec" GridPane.columnIndex="3" GridPane.halignment="LEFT" GridPane.rowIndex="1">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </JFXTextField>
+            <JFXTextField fx:id="contributedBonusFund" focusColor="#4db2ec" GridPane.columnIndex="5" GridPane.halignment="LEFT" GridPane.rowIndex="1">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </JFXTextField>
+            <Label text="К оплате:" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <Label text="Внесено:" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <Label fx:id="oddsType" text="Сдача:" GridPane.columnIndex="4" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <Label fx:id="toPay" text="0.00" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="2">
+               <font>
+                  <Font name="System Bold" size="19.0" />
+               </font>
+            </Label>
+            <Label fx:id="contributedTotalFunds" text="0.00" GridPane.columnIndex="3" GridPane.halignment="LEFT" GridPane.rowIndex="2">
+               <font>
+                  <Font name="System Bold" size="19.0" />
+               </font>
+            </Label>
+            <Label fx:id="odds" text="0.00" GridPane.columnIndex="5" GridPane.halignment="LEFT" GridPane.rowIndex="2">
+               <font>
+                  <Font name="System Bold" size="19.0" />
+               </font>
+            </Label>
+            <HBox maxWidth="237.0" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
+               <children>
+                  <AnchorPane maxWidth="102.0" styleClass="title-container-dark" HBox.hgrow="ALWAYS">
+                     <children>
+                        <Label layoutX="134.0" layoutY="10.0" text="Дисконт:" textFill="WHITE" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                     </children>
+                     <padding>
+                        <Insets left="15.0" right="15.0" />
+                     </padding>
+                  </AnchorPane>
+                  <AnchorPane maxWidth="135.0" HBox.hgrow="ALWAYS">
+                     <children>
+                        <JFXButton layoutX="66.0" layoutY="4.0" onAction="#handleReadDiscount" text="Считать карту" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                     </children>
+                     <padding>
+                        <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+                     </padding>
+                  </AnchorPane>
+               </children>
+            </HBox>
+            <Label text="Номер карты:" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+            <Label text="Тип карты:" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+            <Label text="Владелец:" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+            <Label text="Доступно:" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+            <Label fx:id="discountCardOwner" text="Иванов Иван Иванович" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="5">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <Label fx:id="discountCardNumber" text="1234567890123" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="5">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <Label fx:id="discountCardType" text="Скидочный" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="5">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <Label fx:id="discountCardBalance" text="77.77" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="5">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+         </children>
+      </GridPane>
+   </children>
+</AnchorPane>
