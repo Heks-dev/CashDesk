@@ -4,7 +4,6 @@ import com.jfoenix.controls.JFXPasswordField;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 import ua.org.goservice.cashdesk.model.api.ApiFilter;
 import ua.org.goservice.cashdesk.model.api.ApiUrl;
 import ua.org.goservice.cashdesk.model.api.ApiVal;
@@ -15,7 +14,6 @@ import ua.org.goservice.cashdesk.model.communication.request.FilterSet;
 import ua.org.goservice.cashdesk.model.communication.request.RequestBuilder;
 import ua.org.goservice.cashdesk.model.exception.AuthorizationFailedException;
 import ua.org.goservice.cashdesk.model.exception.CommunicationException;
-import ua.org.goservice.cashdesk.model.util.Validator;
 
 import java.net.URL;
 import java.util.ResourceBundle;

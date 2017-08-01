@@ -2,7 +2,11 @@ package ua.org.goservice.cashdesk.controller.cashdesk.sale;
 
 import javafx.beans.property.StringProperty;
 
+import java.math.BigDecimal;
+
 public class SaleUIAssistant {
+    private static final String ODDS_TYPE_DEFAULT = "Сдача";
+    private static final String ODDS_TYPE_SCARCITY = "Недостача";
 
     private StringProperty checkSum;
     private StringProperty discountRate;
@@ -77,12 +81,27 @@ public class SaleUIAssistant {
         toPay.setValue(value);
     }
 
-    public void setOddsType(String value) {
-        oddsType.setValue(value);
+    public void setOdds(String value) {
+        defineOddsType(value);
+        odds.setValue(value);
     }
 
-    public void setOdds(String value) {
-        odds.setValue(value);
+    private void defineOddsType(String value) {
+        if (value != null) {
+            BigDecimal bigDecimal = new BigDecimal(value);
+            boolean negativeResult = bigDecimal.compareTo(BigDecimal.ZERO) < 0;
+            if (negativeResult) {
+                if (oddsType.getValue().equals(ODDS_TYPE_DEFAULT)) {
+                    oddsType.setValue(ODDS_TYPE_SCARCITY);
+                }
+            } else {
+                if (oddsType.getValue().equals(ODDS_TYPE_SCARCITY)) {
+                    oddsType.setValue(ODDS_TYPE_DEFAULT);
+                }
+            }
+        } else {
+            oddsType.setValue(ODDS_TYPE_DEFAULT);
+        }
     }
 
     public void setDiscountCardOwner(String value) {
@@ -101,7 +120,23 @@ public class SaleUIAssistant {
         discountCardBalance.setValue(value);
     }
 
-    public void clearDraftArea() {
+    void clearUI() {
+        checkSum.setValue(null);
+        discountRate.setValue(null);
+        bonusesAccrued.setValue(null);
 
+        contributedCashFund.setValue(null);
+        contributedTerminalFund.setValue(null);
+        contributedBonusFund.setValue(null);
+
+        discountCardOwner.setValue(null);
+        discountCardNumber.setValue(null);
+        discountCardType.setValue(null);
+        discountCardBalance.setValue(null);
+
+        toPay.setValue(null);
+        contributedTotalFunds.setValue(null);
+        oddsType.setValue(ODDS_TYPE_DEFAULT);
+        odds.setValue(null);
     }
 }

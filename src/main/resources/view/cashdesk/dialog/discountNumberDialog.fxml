@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.*?>
 
 
-<AnchorPane prefHeight="200.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ua.org.goservice.cashdesk.controller.cashdesk.sale.DiscountNumberDialogController">
+<AnchorPane prefHeight="200.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ua.org.goservice.cashdesk.controller.dialogs.dialog.DiscountNumberDialogController">
    <children>
       <JFXTextField fx:id="discountNumberField" alignment="CENTER" layoutX="148.0" layoutY="77.0" onAction="#handleConfirm" promptText="13 цифр" AnchorPane.leftAnchor="70.0" AnchorPane.rightAnchor="70.0" AnchorPane.topAnchor="75.0">
          <font>

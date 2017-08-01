@@ -3,7 +3,9 @@ package ua.org.goservice.cashdesk.controller.auth;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import ua.org.goservice.cashdesk.controller.Continuer;
 import ua.org.goservice.cashdesk.model.employee.Employee;
 
@@ -42,6 +44,22 @@ public class AuthorizationManager implements ScreenLocker {
 
     @Override
     public void lockScreen() {
-
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(LockScreenController.LOCATION));
+            AnchorPane root = loader.load();
+            LockScreenController controller = loader.getController();
+            Scene scene = new Scene(root);
+            scene.getStylesheets().add("/assets/css/main.css");
+            Stage dialog = new Stage();
+            dialog.setScene(scene);
+            dialog.setResizable(false);
+            dialog.initStyle(StageStyle.UNDECORATED);
+            dialog.initModality(Modality.WINDOW_MODAL);
+            dialog.initOwner(primaryStage);
+            controller.setDependencies(dialog, validator);
+            dialog.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

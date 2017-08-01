@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import impl.org.controlsfx.skin.*?>
+<?import com.jfoenix.controls.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane prefHeight="200.0" prefWidth="450.0" styleClass="container" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ua.org.goservice.cashdesk.controller.dialogs.alert.ConfirmationAlertController">
+   <children>
+      <DecorationPane alignment="CENTER_LEFT" layoutX="186.0" layoutY="36.0" prefHeight="50.0" styleClass="title-container-dark" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label fx:id="title" text="Подтвердить действие!" textFill="WHITE">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+         </children>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <padding>
+            <Insets left="20.0" />
+         </padding>
+      </DecorationPane>
+      <HBox layoutX="282.0" layoutY="147.0" spacing="5.0" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0">
+         <children>
+            <JFXButton layoutX="283.0" layoutY="148.0" onAction="#handleCancel" prefHeight="30.0" prefWidth="110.0" text="Отмена" />
+            <JFXButton layoutX="352.0" layoutY="148.0" onAction="#handleConfirm" prefHeight="30.0" prefWidth="110.0" text="Подтвердить" />
+         </children>
+      </HBox>
+      <Text fx:id="content" layoutX="40.0" layoutY="75.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Lorem Ipsum - это текст" textAlignment="JUSTIFY" wrappingWidth="390.0" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="70.0" />
+   </children>
+</AnchorPane>

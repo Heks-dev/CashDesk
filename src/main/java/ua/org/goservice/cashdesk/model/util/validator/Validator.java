@@ -1,4 +1,4 @@
-package ua.org.goservice.cashdesk.model.util;
+package ua.org.goservice.cashdesk.model.util.validator;
 
 public interface Validator<T> {
 

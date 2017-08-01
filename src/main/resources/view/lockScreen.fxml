@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import impl.org.controlsfx.skin.*?>
+<?import javafx.scene.text.*?>
+<?import com.jfoenix.controls.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="200.0" prefWidth="450.0" styleClass="container" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ua.org.goservice.cashdesk.controller.auth.LockScreenController">
+   <children>
+      <JFXButton focusTraversable="false" layoutX="194.0" layoutY="123.0" onAction="#handleConfirm" prefHeight="30.0" text="Подтвердить" AnchorPane.bottomAnchor="35.0" AnchorPane.leftAnchor="160.0" AnchorPane.rightAnchor="160.0">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </JFXButton>
+      <DecorationPane alignment="CENTER_LEFT" layoutX="192.0" layoutY="27.0" prefHeight="50.0" styleClass="title-container-dark" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label focusTraversable="false" text="Разблокировать экран" textFill="WHITE">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </Label>
+         </children>
+         <padding>
+            <Insets left="30.0" />
+         </padding>
+      </DecorationPane>
+      <JFXPasswordField fx:id="passwordField" alignment="CENTER" focusColor="#4db2ec" layoutX="148.0" layoutY="89.0" onAction="#handleConfirm" AnchorPane.leftAnchor="70.0" AnchorPane.rightAnchor="70.0" AnchorPane.topAnchor="90.0">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </JFXPasswordField>
+      <Text fx:id="errorMessage" fill="#ff3300" layoutX="211.0" layoutY="71.0" strokeType="OUTSIDE" strokeWidth="0.0" text="exception" textAlignment="CENTER" wrappingWidth="350.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="60.0" />
+   </children>
+</AnchorPane>

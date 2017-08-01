@@ -1,31 +1,30 @@
-package ua.org.goservice.cashdesk.controller.cashdesk.sale.validator;
+package ua.org.goservice.cashdesk.model.util.validator.fund;
 
 import ua.org.goservice.cashdesk.model.exception.Exceptions;
-import ua.org.goservice.cashdesk.model.util.Validator;
+import ua.org.goservice.cashdesk.model.util.validator.Validator;
 
 import java.math.BigDecimal;
 
 public class FundValidator implements Validator<String> {
     private static final String CURRENCY_FORMAT = "(\\d+)|(\\d+)(.|,)(\\d){1,2}";
     private static final String COMMA_SEPARATOR = ".+(,).+";
-    private BigDecimal validFundValue;
+    private BigDecimal validatedFundValue;
     @Override
     public void validate(String val) {
         if (!val.matches(CURRENCY_FORMAT)) {
             throw new IllegalArgumentException(Exceptions.INVALID_CURRENCY_FORMAT);
         }
-        val = replaceComma(val);
-        validFundValue = new BigDecimal(val);
+        setValidatedFundValue(val);
     }
 
-    private String replaceComma(String val) {
+    private void setValidatedFundValue(String val) {
         if (val.matches(COMMA_SEPARATOR)) {
             val = val.replace(",", ".");
         }
-        return val;
+        validatedFundValue = new BigDecimal(val);
     }
 
     public BigDecimal getValidFund() {
-        return validFundValue;
+        return validatedFundValue;
     }
 }

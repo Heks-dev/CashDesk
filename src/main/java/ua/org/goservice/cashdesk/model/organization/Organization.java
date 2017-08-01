@@ -54,6 +54,6 @@ public class Organization {
 
     @Override
     public String toString() {
-        return name + " " + id;
+        return name;
     }
 }

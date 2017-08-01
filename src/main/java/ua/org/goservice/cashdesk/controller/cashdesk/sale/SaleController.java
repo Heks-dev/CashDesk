@@ -2,42 +2,40 @@ package ua.org.goservice.cashdesk.controller.cashdesk.sale;
 
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
+import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.AnchorPane;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.controlsfx.control.textfield.TextFields;
-import ua.org.goservice.cashdesk.controller.cashdesk.sale.validator.DiscountNumberValidator;
-import ua.org.goservice.cashdesk.controller.cashdesk.sale.validator.FundValidator;
-import ua.org.goservice.cashdesk.controller.cashdesk.sale.validator.ProductCountValidator;
-import ua.org.goservice.cashdesk.controller.control.Alert;
-import ua.org.goservice.cashdesk.controller.control.AlertHeader;
+import ua.org.goservice.cashdesk.controller.dialogs.Dialogs;
+import ua.org.goservice.cashdesk.model.draft.PaymentMethod;
+import ua.org.goservice.cashdesk.model.exception.ActionDeniedException;
+import ua.org.goservice.cashdesk.model.util.validator.DiscountNumberValidator;
+import ua.org.goservice.cashdesk.model.util.validator.fund.DependFundValidator;
+import ua.org.goservice.cashdesk.model.util.validator.fund.FundValidator;
+import ua.org.goservice.cashdesk.model.util.validator.ProductCountValidator;
+import ua.org.goservice.cashdesk.controller.dialogs.alert.AlertCause;
+import ua.org.goservice.cashdesk.controller.dialogs.Alerts;
 import ua.org.goservice.cashdesk.model.discount.DiscountCard;
 import ua.org.goservice.cashdesk.model.discount.DiscountCardSearcher;
 import ua.org.goservice.cashdesk.model.draft.Draft;
 import ua.org.goservice.cashdesk.model.draft.DraftEntry;
-import ua.org.goservice.cashdesk.model.draft.PaymentMethod;
-import ua.org.goservice.cashdesk.model.exception.CancelOperationException;
 import ua.org.goservice.cashdesk.model.exception.Exceptions;
 import ua.org.goservice.cashdesk.model.exception.NotFoundException;
 import ua.org.goservice.cashdesk.model.organization.Organization;
 import ua.org.goservice.cashdesk.model.organization.OrganizationManager;
-import ua.org.goservice.cashdesk.model.util.Validator;
 import ua.org.goservice.cashdesk.model.warehouse.Product;
 import ua.org.goservice.cashdesk.model.warehouse.Warehouse;
 
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class SaleController implements Initializable {
-    public static final String LOCATION = "/view/cashdesk/sale/sale.fxml";
+    public static final String LOCATION = "/view/cashdesk/sale.fxml";
     @FXML
     private JFXTextField productSearchField;
     @FXML
@@ -112,19 +110,20 @@ public class SaleController implements Initializable {
 
     @FXML
     private void handleAddToDraft() {
-        if (productSearchField.getText().length() == 0) return;
+        if (productSearchField.getText() == null
+                || productSearchField.getText().length() == 0) return;
         try {
             Product product = parseSearchField();
             if (draft == null) createNewDraft();
             BigDecimal actualProductCount = warehouse.getActualProductCount(product);
-            BigDecimal desiredCount = callCountDialog(new ProductCountValidator(
-                    product.getMeasures(), actualProductCount), actualProductCount);
-            draft.addProduct(product, desiredCount);
-        } catch (IllegalArgumentException | CancelOperationException e) {
-            System.out.println(e.getMessage());
-            if (e instanceof IllegalArgumentException) {
-                new Alert().callAlert(AlertHeader.ADD_PRODUCT_ERROR, e.getMessage());
+            ProductCountValidator validator = new ProductCountValidator(product.getMeasures(), actualProductCount);
+            if (Dialogs.productQuantity(stage, validator)) {
+                draft.addProduct(product, validator.getDesiredQuantity());
             }
+        } catch (IllegalArgumentException e) {
+            AlertCause cause = AlertCause.NOT_FOUND;
+            cause.setContent(e.getMessage());
+            Alerts.notifying(stage, cause);
         } finally {
             productSearchField.setText(null);
         }
@@ -141,28 +140,13 @@ public class SaleController implements Initializable {
         productTable.setItems(draft.getDraftList());
     }
 
-    private BigDecimal callCountDialog(Validator<String> productCountValidator, BigDecimal actualProductCount) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(ProductCountDialogController.LOCATION));
-            AnchorPane root = loader.load();
-            ProductCountDialogController controller = loader.getController();
-            Stage dialog = createDialogStage(root, ProductCountDialogController.TITLE);
-            controller.setDependencies(dialog, productCountValidator, actualProductCount);
-            dialog.showAndWait();
-            if (controller.isConfirmed()) {
-                return controller.getDesiredCount();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        throw new CancelOperationException();
-    }
-
     @FXML
-    private void handleCancelCheck() {
-        // todo confirms dialog
-        uiAssistant.clearDraftArea();
-        draft = null;
+    private void handleCancelSale() {
+        if (Alerts.confirm(stage, AlertCause.CANCEL_SALE)) {
+            productTable.setItems(null);
+            uiAssistant.clearUI();
+            draft = null;
+        }
     }
 
     @FXML
@@ -170,64 +154,67 @@ public class SaleController implements Initializable {
 
     }
 
+    /**
+     * Contribute funds event handlers
+     */
+    public void callContributeCashFund() {
+        if (draft == null) return;
+        FundValidator validator = new FundValidator();
+        if (Dialogs.contributeFund(stage, validator, PaymentMethod.CASH)) {
+            draft.payInCash(validator.getValidFund());
+        }
+    }
+
+    public void callContributeTerminalFund() {
+        if (draft == null) return;
+        DependFundValidator validator = new DependFundValidator(draft.getTotalContributedFunds(),
+                draft.getTerminalFund(), draft.getAmountToPay());
+        if (Dialogs.contributeFund(stage, validator, PaymentMethod.TERMINAL)) {
+            draft.payInTerminal(validator.getValidFund());
+        }
+    }
+
+    public void callContributeBonusesFund() {
+        if (draft == null) return;
+        try {
+            if (draft.getDiscountCard() == null || draft.getDiscountCard().getType().equals(DiscountCard.DISCOUNT_TYPE)) {
+                throw new ActionDeniedException(Exceptions.DISCOUNT_NOT_SPECIFIED);
+            }
+            DependFundValidator validator = new DependFundValidator(draft.getTotalContributedFunds(),
+                    draft.getBonusFund(), draft.getAmountToPay());
+            if (Dialogs.contributeFund(stage, validator, PaymentMethod.BONUSES)) {
+                draft.payInBonuses(validator.getValidFund());
+            }
+        } catch (ActionDeniedException e) {
+            AlertCause cause = AlertCause.ACTION_DENIED;
+            cause.setContent(e.getMessage());
+            Alerts.notifying(stage, cause);
+        }
+    }
+
+    /**
+     * Discount read event handler
+     */
     @FXML
     private void handleReadDiscount() {
         if (draft == null) return;
         try {
-            Long discountNumber = callReadDiscountNumber();
-            DiscountCard discountCard = cardSearcher.searchDiscountByNumber(discountNumber);
-            draft.setDiscountCard(discountCard);
-        } catch (IllegalArgumentException | NotFoundException e) {
-            // todo alert
-        } catch (CancelOperationException e) {
-            // do nothing
-        }
-    }
-
-    private Long callReadDiscountNumber() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(DiscountNumberDialogController.LOCATION));
-            AnchorPane root = loader.load();
-            DiscountNumberDialogController controller = loader.getController();
-            Stage dialog = createDialogStage(root, DiscountNumberDialogController.TITLE);
-            controller.setDependencies(dialog, new DiscountNumberValidator());
-            dialog.showAndWait();
-            if (controller.isConfirm()) {
-                return controller.getCardNumber();
+            DiscountNumberValidator validator = new DiscountNumberValidator();
+            if (Dialogs.readDiscount(stage, validator)) {
+                DiscountCard discountCard = cardSearcher
+                        .searchDiscountByNumber(validator.getValidatedNumber());
+                draft.setDiscountCard(discountCard);
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        throw new CancelOperationException();
-    }
-
-    private void callContributeCashFund() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(ContributeFundDialogController.LOCATION));
-            AnchorPane root = loader.load();
-            ContributeFundDialogController controller = loader.getController();
-            Stage dialog = createDialogStage(root, ContributeFundDialogController.TITLE);
-            FundValidator fundValidator = new FundValidator();
-            controller.setDependencies(dialog,fundValidator, PaymentMethod.CASH_PAYMENT_LOCALE);
-            dialog.showAndWait();
-            if (controller.isConfirmed()) {
-                draft.payInCash(fundValidator.getValidFund());
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (NotFoundException e) {
+            AlertCause cause = AlertCause.NOT_FOUND;
+            cause.setContent(e.getMessage());
+            Alerts.notifying(stage, cause);
         }
     }
 
-    private Stage createDialogStage(Parent root, String title) {
-        Stage dialog = new Stage();
-        dialog.setScene(new Scene(root));
-        dialog.setTitle(title);
-        dialog.initModality(Modality.WINDOW_MODAL);
-        dialog.initOwner(stage);
-        dialog.setResizable(false);
-        return dialog;
-    }
-
+    /**
+     * Initializing and setting dependencies
+     */
     public void setDependencies(Stage primaryStage, OrganizationManager organizationManager,
                                 Warehouse warehouse, DiscountCardSearcher cardSearcher) {
         this.stage = primaryStage;
@@ -241,24 +228,19 @@ public class SaleController implements Initializable {
     private void initializeBuyerChoiceBox() {
         buyersChoiceBox.setItems(organizationManager.getBuyers());
         buyersChoiceBox.getSelectionModel().select(organizationManager.getCurrentBuyer());
-        initBuyersChoiceListener();
+        initializeBuyerChangeListener();
     }
 
-    private void initBuyersChoiceListener() {
-        buyersChoiceBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            System.out.println(newValue);
-            if (draft != null) {
-                // todo call confirms dialog
-            }
-            organizationManager.changeCurrentBuyer(newValue);
-            warehouse.syncPriceList(organizationManager.getCurrentBuyer());
-        });
+    private void initializeBuyerChangeListener() {
+        buyersChoiceBox.getSelectionModel().selectedItemProperty().addListener(new CounterPartyChangeListener());
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         initTableColumns();
         indicateObservables();
+        uiAssistant.clearUI();
+        initializeFundFields();
     }
 
     private void initTableColumns() {
@@ -285,5 +267,37 @@ public class SaleController implements Initializable {
                 discountCardNumber.textProperty(),
                 discountCardType.textProperty(),
                 discountCardBalance.textProperty());
+    }
+
+    private void initializeFundFields() {
+        contributedCashFund.setEditable(false);
+        contributedTerminalFund.setEditable(false);
+        contributedBonusFund.setEditable(false);
+    }
+
+    class CounterPartyChangeListener implements ChangeListener<Organization> {
+
+        @Override
+        public void changed(ObservableValue<? extends Organization> observable, Organization oldValue, Organization newValue) {
+            if (draft != null && newValue != null) {
+                if (Alerts.confirm(stage, AlertCause.CHANGE_COUNTERPARTY)) {
+                    change(newValue);
+                    draft = null;
+                    productTable.setItems(null);
+                    uiAssistant.clearUI();
+                } else {
+                    Platform.runLater(() -> {
+                        buyersChoiceBox.setValue(oldValue);
+                    });
+                }
+            } else {
+                change(newValue);
+            }
+        }
+
+        private void change(Organization newValue) {
+            organizationManager.changeCurrentBuyer(newValue);
+            warehouse.syncPriceList(newValue);
+        }
     }
 }

@@ -2,6 +2,7 @@ package ua.org.goservice.cashdesk.model.util;
 
 import ua.org.goservice.cashdesk.model.exception.Exceptions;
 import ua.org.goservice.cashdesk.model.exception.NotFoundException;
+import ua.org.goservice.cashdesk.model.util.validator.Validator;
 
 public class SearchValidator implements Validator<String> {
     private static final String NOT_FOUND_CODE = "E502";

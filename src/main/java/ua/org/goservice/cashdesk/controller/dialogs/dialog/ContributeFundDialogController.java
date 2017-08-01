@@ -1,17 +1,15 @@
-package ua.org.goservice.cashdesk.controller.cashdesk.sale;
+package ua.org.goservice.cashdesk.controller.dialogs.dialog;
 
 import com.jfoenix.controls.JFXTextField;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
-import ua.org.goservice.cashdesk.controller.cashdesk.sale.validator.FundValidator;
-import ua.org.goservice.cashdesk.model.util.Validator;
-
-import java.math.BigDecimal;
+import ua.org.goservice.cashdesk.model.util.validator.fund.FundValidator;
+import ua.org.goservice.cashdesk.model.draft.PaymentMethod;
 
 public class ContributeFundDialogController {
-    static final String LOCATION = "/view/cashdesk/sale/contributeFundDialog.fxml";
-    static final String TITLE = "Внесение средств";
+    public static final String LOCATION = "/view/cashdesk/dialog/contributeFundDialog.fxml";
+    public static final String TITLE = "Внесение средств";
     @FXML
     private JFXTextField amountField;
     @FXML
@@ -37,9 +35,9 @@ public class ContributeFundDialogController {
         return confirmed;
     }
 
-    void setDependencies(Stage dialog, FundValidator validator, String fundType) {
+    public void setDependencies(Stage dialog, FundValidator validator, PaymentMethod paymentMethod) {
         this.dialog = dialog;
         this.validator = validator;
-        fundTypeLabel.setText(fundType + ":");
+        fundTypeLabel.setText(paymentMethod.getValue() + ":");
     }
 }

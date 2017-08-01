@@ -47,7 +47,7 @@
          <children>
             <AnchorPane styleClass="tool-container" HBox.hgrow="ALWAYS">
                <children>
-                  <JFXButton layoutX="93.0" layoutY="2.0" onAction="#handleCancelCheck" text="Отмена чека" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0" />
+                  <JFXButton layoutX="93.0" layoutY="2.0" onAction="#handleCancelSale" text="Отмена чека" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0" />
                </children>
                <padding>
                   <Insets left="1.0" />

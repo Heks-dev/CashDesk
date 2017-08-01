@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.*?>
+<?import impl.org.controlsfx.skin.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane prefHeight="200.0" prefWidth="450.0" styleClass="container" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ua.org.goservice.cashdesk.controller.dialogs.alert.AlertController">
+   <children>
+      <DecorationPane alignment="CENTER_LEFT" layoutX="212.0" layoutY="34.0" prefHeight="50.0" styleClass="title-container-dark" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <padding>
+            <Insets left="20.0" />
+         </padding>
+         <children>
+            <Label fx:id="title" text="The title" textFill="WHITE">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+         </children>
+      </DecorationPane>
+      <JFXButton focusTraversable="false" layoutX="355.0" layoutY="152.0" onAction="#handleClose" prefHeight="30.0" prefWidth="110.0" text="Подтвердить" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0" />
+      <Text fx:id="content" layoutX="70.0" layoutY="80.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam semper, nunc ut auctor ullamcorper, massa dolor efficitur augue, eget semper nulla metus nec justo. Curabitur at tellus sit amet enim ultrices volutpat." textAlignment="JUSTIFY" wrappingWidth="390.0" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="70.0" />
+   </children>
+</AnchorPane>

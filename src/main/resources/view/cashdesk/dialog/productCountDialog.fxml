@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.*?>
 
 
-<AnchorPane prefHeight="200.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ua.org.goservice.cashdesk.controller.cashdesk.sale.ProductCountDialogController">
+<AnchorPane prefHeight="200.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ua.org.goservice.cashdesk.controller.dialogs.dialog.ProductCountDialogController">
    <children>
       <JFXTextField fx:id="countField" alignment="CENTER" layoutX="136.0" layoutY="73.0" onAction="#handleConfirm" prefHeight="30.0" promptText="Введите количество" AnchorPane.leftAnchor="70.0" AnchorPane.rightAnchor="70.0" AnchorPane.topAnchor="75.0">
          <font>

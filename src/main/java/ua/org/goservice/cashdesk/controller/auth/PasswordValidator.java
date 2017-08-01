@@ -4,7 +4,7 @@ import ua.org.goservice.cashdesk.model.communication.Extractive;
 import ua.org.goservice.cashdesk.model.exception.AuthorizationFailedException;
 import ua.org.goservice.cashdesk.model.exception.Exceptions;
 import ua.org.goservice.cashdesk.model.util.Hashing;
-import ua.org.goservice.cashdesk.model.util.Validator;
+import ua.org.goservice.cashdesk.model.util.validator.Validator;
 
 class PasswordValidator implements Validator<String>, Extractive {
 

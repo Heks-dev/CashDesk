@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.*?>
 
 
-<AnchorPane prefHeight="200.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ua.org.goservice.cashdesk.controller.cashdesk.sale.ContributeFundDialogController">
+<AnchorPane prefHeight="200.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ua.org.goservice.cashdesk.controller.dialogs.dialog.ContributeFundDialogController">
    <children>
       <JFXTextField fx:id="amountField" alignment="CENTER" layoutX="166.0" layoutY="77.0" onAction="#handleConfirm" prefHeight="30.0" promptText="Введите сумму" AnchorPane.leftAnchor="70.0" AnchorPane.rightAnchor="70.0" AnchorPane.topAnchor="70.0">
          <font>

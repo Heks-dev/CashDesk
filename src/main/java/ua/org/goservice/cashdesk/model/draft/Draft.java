@@ -19,6 +19,7 @@ public class Draft {
     private BigDecimal toPay;
     private BigDecimal bonusesAccrued;
     private DiscountCard discountCard;
+    private BigDecimal odds;
 
     public Draft(SaleUIAssistant uiAssistant) {
         this.uiAssistant = uiAssistant;
@@ -30,6 +31,7 @@ public class Draft {
         if (!isAdded) draftList.add(new DraftEntry(product, count));
         calculateCheckSum();
         calculateAmountToPaid();
+        calculateOdds();
     }
 
     private boolean addProductCount(Product product, BigDecimal count) {
@@ -53,54 +55,102 @@ public class Draft {
     }
 
     private void calculateAmountToPaid() {
-        BigDecimal toPaySum = checkSum;
+        BigDecimal toPaySum;
         boolean specifiedDiscount = discountCard != null;
-        if (specifiedDiscount) {
-            toPaySum = calculateDiscountSums();
-        }
+        if (specifiedDiscount) toPaySum = calculateDiscountSums();
+        else toPaySum = checkSum;
         toPay = toPaySum;
         uiAssistant.setToPay(toPay.toString());
+        calculateOdds();
     }
 
+    /**
+     * Calculating Discount
+     */
     private BigDecimal calculateDiscountSums() {
         BigDecimal toPaySum = checkSum;
-        BigDecimal discountAmount;
-        BigDecimal bonusAccrued;
         BigDecimal discountCoefficient = BigDecimal.valueOf(discountCard.getCoefficient()).movePointLeft(2);
         boolean discountType = discountCard.getType().equals(DiscountCard.DISCOUNT_TYPE);
         if (discountType) {
-            discountAmount = toPaySum.multiply(discountCoefficient)
-                    .setScale(2, RoundingMode.HALF_UP);
-            System.out.println(discountAmount);
-            toPaySum = toPaySum.subtract(discountAmount)
-                    .setScale(2, RoundingMode.HALF_UP);
-            System.out.println(toPaySum);
+            toPaySum = calculateDiscount(toPaySum, discountCoefficient);
         } else {
-            bonusAccrued = toPaySum.multiply(discountCoefficient)
-                    .setScale(2, RoundingMode.HALF_UP);
-            bonusesAccrued = bonusAccrued;
-            uiAssistant.setBonusesAccrued(bonusesAccrued.toString());
+            calculateAccruedBonuses(toPaySum, discountCoefficient);
         }
         return toPaySum;
     }
 
+    private BigDecimal calculateDiscount(BigDecimal toPaySum, BigDecimal discountCoefficient) {
+        BigDecimal discountAmount = toPaySum.multiply(discountCoefficient)
+                .setScale(2, RoundingMode.HALF_UP);
+        toPaySum = toPaySum.subtract(discountAmount)
+                .setScale(2, RoundingMode.HALF_UP);
+        return toPaySum;
+    }
+
+    /**
+     * Accumulative discount -
+     *         charging bonuses
+     */
+    private void calculateAccruedBonuses(BigDecimal toPaySum, BigDecimal discountCoefficient) {
+        if (funds.getBonuses() == null) {
+            chargeBonuses(toPaySum, discountCoefficient);
+        } else {
+            if (bonusesAccrued != null) {
+                cancelChargeBonuses();
+            }
+        }
+    }
+
+    private void chargeBonuses(BigDecimal toPaySum, BigDecimal discountCoefficient) {
+        bonusesAccrued = toPaySum.multiply(discountCoefficient)
+                .setScale(2, RoundingMode.HALF_UP);
+    }
+
+    private void cancelChargeBonuses() {
+        bonusesAccrued = null;
+        uiAssistant.setBonusesAccrued(null);
+    }
+
+    /**
+     * Contributing funds area   /  Calculate odds
+     */
     public void payInCash(BigDecimal fund) {
         funds.payInCash(fund);
         calculateOdds();
+        uiAssistant.setContributedCashFund(fund == null ? null : fund.toString());
+        uiAssistant.setContributedTotalFunds(funds.getTotalContributed() == null ?
+                null : funds.getTotalContributed().toString());
     }
 
     public void payInTerminal(BigDecimal fund) {
         funds.payInTerminal(fund);
+        calculateOdds();
+        uiAssistant.setContributedTerminalFund(fund == null ? null : fund.toString());
+        uiAssistant.setContributedTotalFunds(funds.getTotalContributed() == null ?
+                null : funds.getTotalContributed().toString());
     }
 
     public void payInBonuses(BigDecimal fund) {
         funds.payInBonuses(fund);
+        calculateOdds();
+        calculateDiscountSums();
+        uiAssistant.setContributedBonusFund(fund == null ? null : fund.toString());
+        uiAssistant.setContributedTotalFunds(funds.getTotalContributed() == null ?
+                null : funds.getTotalContributed().toString());
     }
 
     private void calculateOdds() {
-
+        if (funds.getTotalContributed() == null) {
+            odds = null;
+        } else {
+            odds = funds.getTotalContributed().subtract(toPay);
+        }
+        uiAssistant.setOdds(odds == null ? null : odds.toString());
     }
 
+    /**
+     * Discount card area
+     */
     public void setDiscountCard(DiscountCard discountCard) {
         this.discountCard = discountCard;
         updateDiscountCardUIArea();
@@ -121,5 +171,25 @@ public class Draft {
 
     public ObservableList<DraftEntry> getDraftList() {
         return FXCollections.unmodifiableObservableList(draftList);
+    }
+
+    public BigDecimal getTotalContributedFunds() {
+        return funds.getTotalContributed();
+    }
+
+    public BigDecimal getTerminalFund() {
+        return funds.getTerminal();
+    }
+
+    public BigDecimal getAmountToPay() {
+        return toPay;
+    }
+
+    public BigDecimal getBonusFund() {
+        return funds.getBonuses();
+    }
+
+    public DiscountCard getDiscountCard() {
+        return discountCard;
     }
 }

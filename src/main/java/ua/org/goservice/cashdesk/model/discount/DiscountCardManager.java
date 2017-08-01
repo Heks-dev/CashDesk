@@ -9,7 +9,7 @@ import ua.org.goservice.cashdesk.model.communication.request.Filter;
 import ua.org.goservice.cashdesk.model.communication.request.FilterSet;
 import ua.org.goservice.cashdesk.model.communication.request.RequestBuilder;
 import ua.org.goservice.cashdesk.model.util.SearchValidator;
-import ua.org.goservice.cashdesk.model.util.Validator;
+import ua.org.goservice.cashdesk.model.util.validator.Validator;
 import ua.org.goservice.cashdesk.model.util.json.JsonAgent;
 import ua.org.goservice.cashdesk.model.util.json.JsonFormat;
 

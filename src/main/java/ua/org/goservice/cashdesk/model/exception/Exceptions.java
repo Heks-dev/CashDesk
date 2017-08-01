@@ -10,10 +10,6 @@ public final class Exceptions {
 
     public static final String CONNECTION_PROBLEM = loader.getValue("connection.problem");
 
-    public static final String WRONG_ARGUMENTS_NUMBER = loader.getValue("wrong.args.num");
-
-    public static final String EMPLOYEE_ALREADY_LOGGED = loader.getValue("employee.already.logged");
-
     public static final String WRONG_PASSWORD_FORMAT = loader.getValue("wrong.password.format");
 
     public static final String WRONG_PASSWORD = loader.getValue("wrong.password");
@@ -30,4 +26,14 @@ public final class Exceptions {
     public static final String DISCOUNT_NOT_FOUND = loader.getValue("discount.not.found");
 
     public static final String INVALID_CURRENCY_FORMAT = loader.getValue("invalid.currency.format");
+
+    public static final String INCORRECT_MEASURE_APIECE_FORMAT = loader.getValue("incorrect.measure.type.format");
+
+    public static final String INCORRECT_MEASURE_FORMAT = loader.getValue("incorrect.measure.format");
+
+    public static final String EXCEED_AVAILABLE_QUANTITY = loader.getValue("exceed_available_quantity");
+
+    public static final String UNABLE_ADD_MORE_FUNDS = loader.getValue("unable.add.more.funds");
+
+    public static final String DISCOUNT_NOT_SPECIFIED = loader.getValue("discount.not.specified");
 }

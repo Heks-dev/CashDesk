@@ -37,9 +37,9 @@
       <TabPane fx:id="tabPane" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
          <tabs>
             <Tab fx:id="saleTab" closable="false" text="Продажи" />
-            <Tab closable="false" text="Дисконтные карты" />
-            <Tab closable="false" text="Возврат товара" />
-            <Tab closable="false" text="Отчеты" />
+            <Tab fx:id="cardTab" closable="false" text="Дисконтные карты" />
+            <Tab fx:id="refundTab" closable="false" text="Возврат товара" />
+            <Tab fx:id="reportTab" closable="false" text="Отчеты" />
          </tabs></TabPane>
    </center>
 </BorderPane>

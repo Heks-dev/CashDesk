@@ -33,6 +33,16 @@ public class Funds {
     }
 
     public BigDecimal getTotalContributed() {
-        return cash.add(terminal.add(bonuses));
+        BigDecimal result = new BigDecimal(0);
+        if (cash != null) {
+            result = result.add(cash);
+        }
+        if (terminal != null) {
+            result = result.add(terminal);
+        }
+        if (bonuses != null) {
+            result = result.add(bonuses);
+        }
+        return result.compareTo(BigDecimal.ZERO) == 0 ? null : result;
     }
 }
