@@ -3,9 +3,11 @@ package ua.org.goservice.cashdesk.controller.dialogs;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import ua.org.goservice.cashdesk.controller.dialogs.dialog.DiscountNumberDialogController;
 import ua.org.goservice.cashdesk.controller.dialogs.dialog.ProductCountDialogController;
 import ua.org.goservice.cashdesk.model.util.validator.DiscountNumberValidator;
@@ -18,7 +20,7 @@ import ua.org.goservice.cashdesk.model.util.validator.ProductCountValidator;
 import java.io.IOException;
 
 public class Dialogs {
-    // todo impl
+
     public static boolean contributeFund(Stage owner, FundValidator validator, PaymentMethod paymentMethod) {
         FXMLLoader loader = getLoaded(ContributeFundDialogController.LOCATION);
         AnchorPane root = loader.getRoot();
@@ -62,11 +64,19 @@ public class Dialogs {
 
     private static Stage createDialogStage(Parent root, String title, Stage owner) {
         Stage dialog = new Stage();
-        dialog.setScene(new Scene(root));
+        Scene scene = new Scene(root);
+        scene.getStylesheets().add("/assets/css/main.css");
+        dialog.setScene(scene);
         dialog.setTitle(title);
         dialog.initModality(Modality.WINDOW_MODAL);
         dialog.initOwner(owner);
         dialog.setResizable(false);
+        dialog.initStyle(StageStyle.UNDECORATED);
+        scene.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ESCAPE) {
+                dialog.close();
+            }
+        });
         return dialog;
     }
 }

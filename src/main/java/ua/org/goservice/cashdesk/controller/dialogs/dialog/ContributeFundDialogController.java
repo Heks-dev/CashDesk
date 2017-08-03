@@ -4,6 +4,8 @@ import com.jfoenix.controls.JFXTextField;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
+import ua.org.goservice.cashdesk.controller.dialogs.Alerts;
+import ua.org.goservice.cashdesk.controller.dialogs.alert.AlertCause;
 import ua.org.goservice.cashdesk.model.util.validator.fund.FundValidator;
 import ua.org.goservice.cashdesk.model.draft.PaymentMethod;
 
@@ -26,8 +28,9 @@ public class ContributeFundDialogController {
             confirmed = true;
             dialog.close();
         } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
-            // todo alert
+            AlertCause cause = AlertCause.ACTION_DENIED;
+            cause.setContent(e.getMessage());
+            Alerts.notifying(dialog, cause);
         }
     }
 
@@ -38,6 +41,6 @@ public class ContributeFundDialogController {
     public void setDependencies(Stage dialog, FundValidator validator, PaymentMethod paymentMethod) {
         this.dialog = dialog;
         this.validator = validator;
-        fundTypeLabel.setText(paymentMethod.getValue() + ":");
+        fundTypeLabel.setText(paymentMethod.getValue());
     }
 }

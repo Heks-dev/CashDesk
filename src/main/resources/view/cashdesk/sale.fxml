@@ -27,10 +27,10 @@
             <Font size="15.0" />
          </font>
       </JFXTextField>
-      <Label layoutX="37.0" layoutY="66.0" text="Поиск:" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="60.0" />
+      <Label focusTraversable="false" layoutX="37.0" layoutY="66.0" text="Поиск:" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="60.0" />
       <JFXComboBox fx:id="buyersChoiceBox" focusColor="#4db2ec" layoutX="553.0" layoutY="68.0" prefHeight="27.0" prefWidth="250.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="60.0" />
-      <Label layoutX="445.0" layoutY="60.0" text="Контрагент:" AnchorPane.rightAnchor="310.0" AnchorPane.topAnchor="60.0" />
-      <TableView fx:id="productTable" layoutX="300.0" layoutY="121.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="250.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="107.0">
+      <Label focusTraversable="false" layoutX="445.0" layoutY="60.0" text="Контрагент:" AnchorPane.rightAnchor="310.0" AnchorPane.topAnchor="60.0" />
+      <TableView fx:id="productTable" focusTraversable="false" layoutX="300.0" layoutY="121.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="250.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="107.0">
         <columns>
           <TableColumn fx:id="barcodeColumn" maxWidth="3500.0" prefWidth="75.0" text="Код" />
           <TableColumn fx:id="nameColumn" maxWidth="7000.0" prefWidth="75.0" text="Наименование" />
@@ -47,7 +47,7 @@
          <children>
             <AnchorPane styleClass="tool-container" HBox.hgrow="ALWAYS">
                <children>
-                  <JFXButton layoutX="93.0" layoutY="2.0" onAction="#handleCancelSale" text="Отмена чека" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0" />
+                  <JFXButton focusTraversable="false" layoutX="93.0" layoutY="2.0" onAction="#handleCancelSale" text="Отмена чека" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0" />
                </children>
                <padding>
                   <Insets left="1.0" />
@@ -55,7 +55,7 @@
             </AnchorPane>
             <AnchorPane styleClass="tool-container" HBox.hgrow="ALWAYS">
                <children>
-                  <JFXButton layoutX="61.0" layoutY="10.0" onAction="#handleCompleteCheck" text="Закрыть чек" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0" />
+                  <JFXButton focusTraversable="false" layoutX="61.0" layoutY="10.0" onAction="#handleCompleteCheck" text="Закрыть чек" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0" />
                </children>
                <padding>
                   <Insets right="1.0" />
@@ -81,68 +81,68 @@
             <RowConstraints minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label text="Сумма чека:" GridPane.halignment="RIGHT" />
-            <Label text="Скидка:" GridPane.columnIndex="2" GridPane.halignment="RIGHT" />
-            <Label text="Начислено:" wrapText="true" GridPane.columnIndex="4" GridPane.halignment="RIGHT" />
-            <Label fx:id="checkSum" text="0.00" GridPane.columnIndex="1">
+            <Label focusTraversable="false" text="Сумма чека:" GridPane.halignment="RIGHT" />
+            <Label focusTraversable="false" text="Скидка:" GridPane.columnIndex="2" GridPane.halignment="RIGHT" />
+            <Label focusTraversable="false" text="Начислено:" wrapText="true" GridPane.columnIndex="4" GridPane.halignment="RIGHT" />
+            <Label fx:id="checkSum" focusTraversable="false" text="0.00" GridPane.columnIndex="1">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
             </Label>
-            <Label fx:id="discountRate" text="0.00" GridPane.columnIndex="3">
+            <Label fx:id="discountRate" focusTraversable="false" text="0.00" GridPane.columnIndex="3">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
             </Label>
-            <Label fx:id="bonusesAccrued" text="0.00" GridPane.columnIndex="5">
+            <Label fx:id="bonusesAccrued" focusTraversable="false" text="0.00" GridPane.columnIndex="5">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
             </Label>
-            <Label text="Наличные:" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
-            <Label text="Терминал:" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
-            <Label text="Бонусы:" GridPane.columnIndex="4" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
-            <JFXTextField fx:id="contributedCashFund" focusColor="#4db2ec" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="1">
-               <font>
-                  <Font name="System Bold" size="15.0" />
-               </font>
-            </JFXTextField>
-            <JFXTextField fx:id="contributedTerminalFund" focusColor="#4db2ec" GridPane.columnIndex="3" GridPane.halignment="LEFT" GridPane.rowIndex="1">
+            <Label focusTraversable="false" text="Наличные:" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
+            <Label focusTraversable="false" text="Терминал:" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
+            <Label focusTraversable="false" text="Бонусы:" GridPane.columnIndex="4" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
+            <JFXTextField fx:id="contributedCashFund" focusColor="#4db2ec" focusTraversable="false" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="1">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
             </JFXTextField>
-            <JFXTextField fx:id="contributedBonusFund" focusColor="#4db2ec" GridPane.columnIndex="5" GridPane.halignment="LEFT" GridPane.rowIndex="1">
+            <JFXTextField fx:id="contributedTerminalFund" focusColor="#4db2ec" focusTraversable="false" GridPane.columnIndex="3" GridPane.halignment="LEFT" GridPane.rowIndex="1">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
             </JFXTextField>
-            <Label text="К оплате:" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
+            <JFXTextField fx:id="contributedBonusFund" focusColor="#4db2ec" focusTraversable="false" GridPane.columnIndex="5" GridPane.halignment="LEFT" GridPane.rowIndex="1">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </JFXTextField>
+            <Label focusTraversable="false" text="К оплате:" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
                <font>
                   <Font size="15.0" />
                </font>
             </Label>
-            <Label text="Внесено:" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
+            <Label focusTraversable="false" text="Внесено:" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
                <font>
                   <Font size="15.0" />
                </font>
             </Label>
-            <Label fx:id="oddsType" text="Сдача:" GridPane.columnIndex="4" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
+            <Label fx:id="oddsType" focusTraversable="false" text="Сдача:" GridPane.columnIndex="4" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
                <font>
                   <Font size="15.0" />
                </font>
             </Label>
-            <Label fx:id="toPay" text="0.00" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="2">
+            <Label fx:id="toPay" focusTraversable="false" text="0.00" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="2">
                <font>
                   <Font name="System Bold" size="19.0" />
                </font>
             </Label>
-            <Label fx:id="contributedTotalFunds" text="0.00" GridPane.columnIndex="3" GridPane.halignment="LEFT" GridPane.rowIndex="2">
+            <Label fx:id="contributedTotalFunds" focusTraversable="false" text="0.00" GridPane.columnIndex="3" GridPane.halignment="LEFT" GridPane.rowIndex="2">
                <font>
                   <Font name="System Bold" size="19.0" />
                </font>
             </Label>
-            <Label fx:id="odds" text="0.00" GridPane.columnIndex="5" GridPane.halignment="LEFT" GridPane.rowIndex="2">
+            <Label fx:id="odds" focusTraversable="false" text="0.00" GridPane.columnIndex="5" GridPane.halignment="LEFT" GridPane.rowIndex="2">
                <font>
                   <Font name="System Bold" size="19.0" />
                </font>
@@ -151,7 +151,7 @@
                <children>
                   <AnchorPane maxWidth="102.0" styleClass="title-container-dark" HBox.hgrow="ALWAYS">
                      <children>
-                        <Label layoutX="134.0" layoutY="10.0" text="Дисконт:" textFill="WHITE" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0">
+                        <Label focusTraversable="false" layoutX="134.0" layoutY="10.0" text="Дисконт:" textFill="WHITE" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0">
                            <font>
                               <Font size="15.0" />
                            </font>
@@ -163,7 +163,7 @@
                   </AnchorPane>
                   <AnchorPane maxWidth="135.0" HBox.hgrow="ALWAYS">
                      <children>
-                        <JFXButton layoutX="66.0" layoutY="4.0" onAction="#handleReadDiscount" text="Считать карту" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                        <JFXButton focusTraversable="false" layoutX="66.0" layoutY="4.0" onAction="#handleReadDiscount" text="Считать карту" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                      </children>
                      <padding>
                         <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
@@ -171,26 +171,26 @@
                   </AnchorPane>
                </children>
             </HBox>
-            <Label text="Номер карты:" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
-            <Label text="Тип карты:" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
-            <Label text="Владелец:" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
-            <Label text="Доступно:" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
-            <Label fx:id="discountCardOwner" text="Иванов Иван Иванович" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="5">
+            <Label focusTraversable="false" text="Номер карты:" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+            <Label focusTraversable="false" text="Тип карты:" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+            <Label focusTraversable="false" text="Владелец:" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+            <Label focusTraversable="false" text="Доступно:" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+            <Label fx:id="discountCardOwner" focusTraversable="false" text="Иванов Иван Иванович" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="5">
                <font>
                   <Font size="15.0" />
                </font>
             </Label>
-            <Label fx:id="discountCardNumber" text="1234567890123" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="5">
+            <Label fx:id="discountCardNumber" focusTraversable="false" text="1234567890123" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="5">
                <font>
                   <Font size="15.0" />
                </font>
             </Label>
-            <Label fx:id="discountCardType" text="Скидочный" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="5">
+            <Label fx:id="discountCardType" focusTraversable="false" text="Скидочный" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="5">
                <font>
                   <Font size="15.0" />
                </font>
             </Label>
-            <Label fx:id="discountCardBalance" text="77.77" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="5">
+            <Label fx:id="discountCardBalance" focusTraversable="false" text="77.77" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="5">
                <font>
                   <Font size="15.0" />
                </font>

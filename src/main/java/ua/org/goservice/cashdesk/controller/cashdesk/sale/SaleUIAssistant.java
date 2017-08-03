@@ -5,8 +5,8 @@ import javafx.beans.property.StringProperty;
 import java.math.BigDecimal;
 
 public class SaleUIAssistant {
-    private static final String ODDS_TYPE_DEFAULT = "Сдача";
-    private static final String ODDS_TYPE_SCARCITY = "Недостача";
+    private static final String ODDS_TYPE_DEFAULT = "Сдача:";
+    private static final String ODDS_TYPE_SCARCITY = "Недостача:";
 
     private StringProperty checkSum;
     private StringProperty discountRate;

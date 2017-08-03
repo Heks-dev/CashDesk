@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.text.*?>
-<?import javafx.scene.control.*?>
 <?import java.lang.*?>
+<?import javafx.scene.control.*?>
 <?import com.jfoenix.controls.*?>
-<?import impl.org.controlsfx.skin.*?>
 <?import javafx.scene.layout.*?>
 
 <BorderPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ua.org.goservice.cashdesk.controller.cashdesk.RootController">
@@ -15,17 +13,17 @@
                <children>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
                      <children>
-                        <JFXButton alignment="CENTER" layoutX="36.0" layoutY="4.0" onAction="#handleSynchronize" text="Синхронизация" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                        <JFXButton alignment="CENTER" focusTraversable="false" layoutX="36.0" layoutY="4.0" onAction="#handleSynchronize" text="Синхронизация" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                      </children>
                   </AnchorPane>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
                      <children>
-                        <JFXButton alignment="CENTER" layoutX="69.0" layoutY="4.0" onAction="#handleLockScreen" text="Блокировать экран" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                        <JFXButton alignment="CENTER" focusTraversable="false" layoutX="69.0" layoutY="4.0" onAction="#handleLockScreen" text="Блокировать экран" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                      </children>
                   </AnchorPane>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
                      <children>
-                        <JFXButton alignment="CENTER" layoutX="62.0" layoutY="2.0" onAction="#handleLogOut" text="Сменить пользователя" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                        <JFXButton alignment="CENTER" focusTraversable="false" layoutX="62.0" layoutY="2.0" onAction="#handleLogOut" text="Сменить пользователя" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                      </children>
                   </AnchorPane>
                </children>
@@ -34,7 +32,7 @@
       </AnchorPane>
    </top>
    <center>
-      <TabPane fx:id="tabPane" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+      <TabPane fx:id="tabPane" focusTraversable="false" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
          <tabs>
             <Tab fx:id="saleTab" closable="false" text="Продажи" />
             <Tab fx:id="cardTab" closable="false" text="Дисконтные карты" />

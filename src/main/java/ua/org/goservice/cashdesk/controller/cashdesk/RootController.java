@@ -1,6 +1,5 @@
 package ua.org.goservice.cashdesk.controller.cashdesk;
 
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -9,7 +8,6 @@ import javafx.scene.control.TabPane;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import ua.org.goservice.cashdesk.controller.auth.ScreenLocker;
@@ -79,34 +77,49 @@ public class RootController {
         bindSalePaneHotKeys(saleLoader.getController(), scene);
     }
 
-    private void bindSalePaneHotKeys(SaleController controller, Scene scene) {
-        scene.setOnKeyPressed(event -> {
-            if (tabPane.getSelectionModel().getSelectedItem().equals(saleTab)) {
-                if (event.getCode() == KeyCode.F5) {
-                    controller.callContributeCashFund();
-                }
-                if (event.getCode() == KeyCode.F6) {
-                    controller.callContributeTerminalFund();
-                }
-                if (event.getCode() == KeyCode.F7) {
-                    controller.callContributeBonusesFund();
-                }
-            }
-        });
-    }
-
     private void setTabContent(AnchorPane salePane) {
         saleTab.setContent(salePane);
     }
 
+    private void bindSalePaneHotKeys(SaleController controller, Scene scene) {
+        scene.getAccelerators().put(new KeyCodeCombination(KeyCode.Z, KeyCombination.ALT_DOWN), () -> {
+            if (tabPane.getSelectionModel().getSelectedItem().equals(saleTab)) {
+                controller.callContributeCashFund();
+            }
+        });
+        scene.getAccelerators().put(new KeyCodeCombination(KeyCode.X, KeyCombination.ALT_DOWN), () -> {
+            if (tabPane.getSelectionModel().getSelectedItem().equals(saleTab)) {
+                controller.callContributeTerminalFund();
+            }
+        });
+        scene.getAccelerators().put(new KeyCodeCombination(KeyCode.C, KeyCombination.ALT_DOWN), () -> {
+            if (tabPane.getSelectionModel().getSelectedItem().equals(saleTab)) {
+                controller.callContributeBonusesFund();
+            }
+        });
+//        scene.setOnKeyPressed(event -> {
+//            if (tabPane.getSelectionModel().getSelectedItem().equals(saleTab)) {
+//                if (event.getCode() == KeyCode.F5) {
+//                    controller.callContributeCashFund();
+//                }
+//                if (event.getCode() == KeyCode.F6) {
+//                    controller.callContributeTerminalFund();
+//                }
+//                if (event.getCode() == KeyCode.F7) {
+//                    controller.callContributeBonusesFund();
+//                }
+//            }
+//        });
+    }
+
     private void bindTabHotKeys(Scene scene) {
         scene.getAccelerators().put(new KeyCodeCombination(KeyCode.DIGIT1,
-                KeyCombination.ALT_ANY), () -> tabPane.getSelectionModel().select(saleTab));
+                KeyCombination.CONTROL_DOWN), () -> tabPane.getSelectionModel().select(saleTab));
         scene.getAccelerators().put(new KeyCodeCombination(KeyCode.DIGIT2,
-                KeyCombination.ALT_ANY), () -> tabPane.getSelectionModel().select(cardTab));
+                KeyCombination.CONTROL_DOWN), () -> tabPane.getSelectionModel().select(cardTab));
         scene.getAccelerators().put(new KeyCodeCombination(KeyCode.DIGIT3,
-                KeyCombination.ALT_ANY), () -> tabPane.getSelectionModel().select(refundTab));
+                KeyCombination.CONTROL_DOWN), () -> tabPane.getSelectionModel().select(refundTab));
         scene.getAccelerators().put(new KeyCodeCombination(KeyCode.DIGIT4,
-                KeyCombination.ALT_ANY), () -> tabPane.getSelectionModel().select(reportTab));
+                KeyCombination.CONTROL_DOWN), () -> tabPane.getSelectionModel().select(reportTab));
     }
 }

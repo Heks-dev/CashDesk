@@ -115,6 +115,7 @@ public class Draft {
      * Contributing funds area   /  Calculate odds
      */
     public void payInCash(BigDecimal fund) {
+        fund = nullIfZero(fund);
         funds.payInCash(fund);
         calculateOdds();
         uiAssistant.setContributedCashFund(fund == null ? null : fund.toString());
@@ -123,6 +124,7 @@ public class Draft {
     }
 
     public void payInTerminal(BigDecimal fund) {
+        fund = nullIfZero(fund);
         funds.payInTerminal(fund);
         calculateOdds();
         uiAssistant.setContributedTerminalFund(fund == null ? null : fund.toString());
@@ -131,12 +133,20 @@ public class Draft {
     }
 
     public void payInBonuses(BigDecimal fund) {
+        fund = nullIfZero(fund);
         funds.payInBonuses(fund);
         calculateOdds();
         calculateDiscountSums();
         uiAssistant.setContributedBonusFund(fund == null ? null : fund.toString());
         uiAssistant.setContributedTotalFunds(funds.getTotalContributed() == null ?
                 null : funds.getTotalContributed().toString());
+    }
+
+    private BigDecimal nullIfZero(BigDecimal fund) {
+        if (fund.compareTo(BigDecimal.ZERO) <= 0) {
+            fund = null;
+        }
+        return fund;
     }
 
     private void calculateOdds() {
@@ -173,16 +183,24 @@ public class Draft {
         return FXCollections.unmodifiableObservableList(draftList);
     }
 
+    public BigDecimal getAmountToPay() {
+        return toPay;
+    }
+
+    public BigDecimal getOdds() {
+        return odds;
+    }
+
     public BigDecimal getTotalContributedFunds() {
         return funds.getTotalContributed();
     }
 
-    public BigDecimal getTerminalFund() {
-        return funds.getTerminal();
+    public BigDecimal getCashFund() {
+        return funds.getCash();
     }
 
-    public BigDecimal getAmountToPay() {
-        return toPay;
+    public BigDecimal getTerminalFund() {
+        return funds.getTerminal();
     }
 
     public BigDecimal getBonusFund() {
