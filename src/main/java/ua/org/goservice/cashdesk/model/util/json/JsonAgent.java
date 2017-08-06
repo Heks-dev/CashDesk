@@ -16,6 +16,11 @@ public class JsonAgent {
         return gson.fromJson(json, token.getType());
     }
 
+    public static String serialize(Object src, JsonFormat format) {
+        String json = gson.toJson(src);
+        return formatting(json, format);
+    }
+
     private static String formatting(String json, JsonFormat format) {
         switch (format) {
             case UNCHANGED:

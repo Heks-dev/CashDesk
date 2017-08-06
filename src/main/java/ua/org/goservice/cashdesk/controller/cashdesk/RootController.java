@@ -97,19 +97,6 @@ public class RootController {
                 controller.callContributeBonusesFund();
             }
         });
-//        scene.setOnKeyPressed(event -> {
-//            if (tabPane.getSelectionModel().getSelectedItem().equals(saleTab)) {
-//                if (event.getCode() == KeyCode.F5) {
-//                    controller.callContributeCashFund();
-//                }
-//                if (event.getCode() == KeyCode.F6) {
-//                    controller.callContributeTerminalFund();
-//                }
-//                if (event.getCode() == KeyCode.F7) {
-//                    controller.callContributeBonusesFund();
-//                }
-//            }
-//        });
     }
 
     private void bindTabHotKeys(Scene scene) {

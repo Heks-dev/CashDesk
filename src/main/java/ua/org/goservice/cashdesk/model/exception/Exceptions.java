@@ -36,4 +36,11 @@ public final class Exceptions {
     public static final String UNABLE_ADD_MORE_FUNDS = loader.getValue("unable.add.more.funds");
 
     public static final String DISCOUNT_NOT_SPECIFIED = loader.getValue("discount.not.specified");
+
+    public static final String INSUFFICIENT_FUNDS = loader.getValue("insufficient_funds");
+
+    public static final String PAYMENT_AMOUNT_EXCEEDED = loader.getValue("payment.amount.exceeded");
+
+    public static final String BOTH_PAYMENT_AMOUNT_EXCEEDED = loader.getValue("both.payment.amount.exceeded");
+    public static final String AMOUNT_NOT_MATCH = loader.getValue("amount.not.match");
 }

@@ -6,6 +6,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.stage.Window;
 import ua.org.goservice.cashdesk.controller.dialogs.alert.AlertCause;
 import ua.org.goservice.cashdesk.controller.dialogs.alert.AlertController;
 import ua.org.goservice.cashdesk.controller.dialogs.alert.ConfirmationAlertController;
@@ -15,7 +16,7 @@ import java.io.IOException;
 
 public class Alerts {
 
-    public static boolean confirm(Stage owner, AlertCause cause) {
+    public static boolean confirm(Window owner, AlertCause cause) {
         try {
             FXMLLoader loader = new FXMLLoader(Class.class.getResource(ConfirmationAlertController.LOCATION));
             AnchorPane root = loader.load();
@@ -30,7 +31,8 @@ public class Alerts {
         throw new CancelOperationException();
     }
 
-    public static void notifying(Stage owner, AlertCause cause) {
+    // todo trying to compile with window
+    public static void notifying(Window owner, AlertCause cause) {
         try {
             FXMLLoader loader = new FXMLLoader(Class.class.getResource(AlertController.LOCATION));
             AnchorPane root = loader.load();
@@ -43,7 +45,7 @@ public class Alerts {
         }
     }
 
-    private static Stage createStage(AnchorPane root, Stage owner) {
+    private static Stage createStage(AnchorPane root, Window owner) {
         Stage stage = new Stage();
         stage.setScene(createScene(root));
         stage.setResizable(false);

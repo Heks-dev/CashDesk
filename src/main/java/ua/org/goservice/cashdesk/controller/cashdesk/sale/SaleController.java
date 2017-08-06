@@ -10,10 +10,15 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import org.controlsfx.control.textfield.TextFields;
+import ua.org.goservice.cashdesk.controller.control.EditingCell;
 import ua.org.goservice.cashdesk.controller.dialogs.Dialogs;
 import ua.org.goservice.cashdesk.model.draft.PaymentMethod;
 import ua.org.goservice.cashdesk.model.exception.ActionDeniedException;
+import ua.org.goservice.cashdesk.model.trade.Operator;
+import ua.org.goservice.cashdesk.model.trade.transaction.SaleTransaction;
+import ua.org.goservice.cashdesk.model.util.validator.tableCell.CellProductCountValidator;
 import ua.org.goservice.cashdesk.model.util.validator.DiscountNumberValidator;
+import ua.org.goservice.cashdesk.model.util.validator.fund.ComplexFundValidator;
 import ua.org.goservice.cashdesk.model.util.validator.fund.DependFundValidator;
 import ua.org.goservice.cashdesk.model.util.validator.fund.FundValidator;
 import ua.org.goservice.cashdesk.model.util.validator.ProductCountValidator;
@@ -107,6 +112,7 @@ public class SaleController implements Initializable {
 
     private final SaleUIAssistant uiAssistant = new SaleUIAssistant();
     private Draft draft;
+    private Operator<SaleTransaction> operator;
 
     @FXML
     private void handleAddToDraft() {
@@ -114,10 +120,10 @@ public class SaleController implements Initializable {
                 || productSearchField.getText().length() == 0) return;
         try {
             Product product = parseSearchField();
-            if (draft == null) createNewDraft();
-            BigDecimal actualProductCount = warehouse.getActualProductCount(product);
+            BigDecimal actualProductCount = warehouse.getActualProductCount(product.getBarcode());
             ProductCountValidator validator = new ProductCountValidator(product.getMeasures(), actualProductCount);
             if (Dialogs.productQuantity(stage, validator)) {
+                if (draft == null) createNewDraft();
                 draft.addProduct(product, validator.getDesiredQuantity());
             }
         } catch (IllegalArgumentException e) {
@@ -142,16 +148,38 @@ public class SaleController implements Initializable {
 
     @FXML
     private void handleCancelSale() {
+        if (draft == null) return;
         if (Alerts.confirm(stage, AlertCause.CANCEL_SALE)) {
-            productTable.setItems(null);
-            uiAssistant.clearUI();
-            draft = null;
+            closeSale();
         }
     }
 
     @FXML
-    private void handleCompleteCheck() {
+    private void handleCompleteSale() {
+        if (draft == null) return;
+        if (Alerts.confirm(stage, AlertCause.COMPLETE_SALE)) {
+            try {
+                ComplexFundValidator validator = new ComplexFundValidator();
+                validator.validate(draft);
+                operator.complete(new SaleTransaction(validator.getAmountInCash(), warehouse, draft,
+                        organizationManager.getOurOrganization(), organizationManager.getCurrentBuyer()));
+                if (draft.getOdds().compareTo(BigDecimal.ZERO) > 0) {
+                    AlertCause.ISSUE_CHANGE.formattingContent(draft.getOdds().toString());
+                    Alerts.notifying(stage, AlertCause.ISSUE_CHANGE);
+                }
+                closeSale();
+            } catch (ActionDeniedException e) {
+                AlertCause cause = AlertCause.ACTION_DENIED;
+                cause.setContent(e.getMessage());
+                Alerts.notifying(stage, cause);
+            }
+        }
+    }
 
+    private void closeSale() {
+        productTable.setItems(null);
+        uiAssistant.clearUI();
+        draft = null;
     }
 
     /**
@@ -216,11 +244,13 @@ public class SaleController implements Initializable {
      * Initializing and setting dependencies
      */
     public void setDependencies(Stage primaryStage, OrganizationManager organizationManager,
-                                Warehouse warehouse, DiscountCardSearcher cardSearcher) {
+                                Warehouse warehouse, DiscountCardSearcher cardSearcher,
+                                Operator<SaleTransaction> operator) {
         this.stage = primaryStage;
         this.organizationManager = organizationManager;
         this.warehouse = warehouse;
         this.cardSearcher = cardSearcher;
+        this.operator = operator;
         TextFields.bindAutoCompletion(productSearchField, this.warehouse.getPriceList());
         initializeBuyerChoiceBox();
     }
@@ -244,6 +274,30 @@ public class SaleController implements Initializable {
     }
 
     private void initTableColumns() {
+        countColumn.setCellFactory(param -> new EditingCell(new CellProductCountValidator()));
+        countColumn.setOnEditCommit(event -> {
+            try {
+                BigDecimal actualProductCount = warehouse.getActualProductCount(
+                        event.getRowValue().getBarcode());
+                ProductCountValidator validator = new ProductCountValidator(event.getRowValue().getMeasure(), actualProductCount);
+                validator.validate(event.getNewValue().toString());
+                if (event.getNewValue().compareTo(BigDecimal.ZERO) == 0) {
+                    draft.removeEmptyEntry(event.getRowValue());
+                } else {
+                    event.getRowValue().setQuantity(event.getNewValue());
+                }
+                if (draft.getDraftList().size() == 0) {
+                    closeSale();
+                } else {
+                    draft.calculateChanges();
+                }
+            } catch (IllegalArgumentException e) {
+                event.getRowValue().setQuantity(event.getOldValue());
+                AlertCause cause = AlertCause.ACTION_DENIED;
+                cause.setContent(e.getMessage());
+                Alerts.notifying(stage, cause);
+            }
+        });
         barcodeColumn.setCellValueFactory(cellData -> cellData.getValue().barcodeProperty());
         nameColumn.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
         measureColumn.setCellValueFactory(cellData -> cellData.getValue().measureProperty());

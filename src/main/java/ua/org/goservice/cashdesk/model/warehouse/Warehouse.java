@@ -20,12 +20,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Warehouse {
+public class Warehouse implements IDGoodSearcher {
 
     private final RequestExecutor requestExecutor = new HttpRequestExecutor();
     private final Integer storeid;
     private ObservableList<Product> priceList = FXCollections.observableArrayList();
     private Map<String, Product> namedProductStorage;
+    private Map<String, Product> barcodeProductStorage;
 
     public Warehouse(Integer storeid, Organization currentBuyer) {
         this.storeid = storeid;
@@ -34,7 +35,7 @@ public class Warehouse {
 
     public void syncPriceList(Organization currentBuyer) {
         sync(currentBuyer);
-        mappingProductsWithProductName();
+        mappingProducts();
     }
 
     private void sync(Organization currentBuyer) {
@@ -50,18 +51,26 @@ public class Warehouse {
         priceList.setAll(productList);
     }
 
-    private void mappingProductsWithProductName() {
+    private void mappingProducts() {
         namedProductStorage = new HashMap<>();
+        barcodeProductStorage = new HashMap<>();
         for (Product product : priceList) {
             namedProductStorage.put(product.toString(), product);
+            barcodeProductStorage.put(product.getBarcode(), product);
         }
+    }
+
+    @Override
+    public Integer findGoodID(String barcode) {
+        return barcodeProductStorage.get(barcode).getGoodid();
     }
 
     public Product getProductByName(String name) {
         return namedProductStorage.get(name);
     }
 
-    public BigDecimal getActualProductCount(Product product) {
+    public BigDecimal getActualProductCount(String barcode) {
+        Product product = barcodeProductStorage.get(barcode);
         requestExecutor.sendRequest(new RequestBuilder(ApiUrl.STOREHOUSE, ApiVal.LIST,
                 new FilterSet(
                         new Filter(ApiFilter.PRICE_ID, product.getPriceid()),

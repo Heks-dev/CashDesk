@@ -76,11 +76,17 @@ public class DraftEntry {
         return totalSum;
     }
 
+    public void setQuantity(BigDecimal count) {
+        this.count.setValue(count);
+        calculateTotalSum();
+    }
+
     public void addQuantity(BigDecimal count) {
         this.count.setValue(this.count.getValue().add(count)
                 .setScale(2, RoundingMode.HALF_UP));
         calculateTotalSum();
     }
+
 
     private void calculateTotalSum() {
         totalSum.setValue(price.getValue().multiply(count.getValue())
@@ -90,5 +96,31 @@ public class DraftEntry {
     @Override
     public String toString() {
         return barcode.getValue() + " " + name.getValue();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        DraftEntry that = (DraftEntry) o;
+
+        if (barcode != null ? !barcode.equals(that.barcode) : that.barcode != null) return false;
+        if (name != null ? !name.equals(that.name) : that.name != null) return false;
+        if (measure != null ? !measure.equals(that.measure) : that.measure != null) return false;
+        if (price != null ? !price.equals(that.price) : that.price != null) return false;
+        if (count != null ? !count.equals(that.count) : that.count != null) return false;
+        return totalSum != null ? totalSum.equals(that.totalSum) : that.totalSum == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = barcode != null ? barcode.hashCode() : 0;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (measure != null ? measure.hashCode() : 0);
+        result = 31 * result + (price != null ? price.hashCode() : 0);
+        result = 31 * result + (count != null ? count.hashCode() : 0);
+        result = 31 * result + (totalSum != null ? totalSum.hashCode() : 0);
+        return result;
     }
 }

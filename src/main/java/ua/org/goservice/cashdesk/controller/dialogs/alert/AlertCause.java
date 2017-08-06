@@ -10,7 +10,9 @@ public enum AlertCause {
     LOG_OUT("log.out"),
     SYNCHRONIZATION_PROBLEM("sync.problem"),
     NOT_FOUND("not.found"),
-    ACTION_DENIED("action.denied");
+    ACTION_DENIED("action.denied"),
+    COMPLETE_SALE("complete.sale"),
+    ISSUE_CHANGE("issue.change");
 
     private static final PropertyLoader title_loader = new PropertyLoader("/strings/alert-title.properties");
     private static final PropertyLoader content_loader = new PropertyLoader("/strings/alert-content.properties");
@@ -36,5 +38,9 @@ public enum AlertCause {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public void formattingContent(String val) {
+        content = String.format(content_loader.getValue(key), val);
     }
 }

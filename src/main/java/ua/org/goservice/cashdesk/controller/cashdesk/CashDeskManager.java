@@ -2,7 +2,6 @@ package ua.org.goservice.cashdesk.controller.cashdesk;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import ua.org.goservice.cashdesk.MainApp;
@@ -11,6 +10,7 @@ import ua.org.goservice.cashdesk.controller.cashdesk.sale.SaleController;
 import ua.org.goservice.cashdesk.model.discount.DiscountCardManager;
 import ua.org.goservice.cashdesk.model.employee.Employee;
 import ua.org.goservice.cashdesk.model.organization.OrganizationManager;
+import ua.org.goservice.cashdesk.model.trade.SaleOperator;
 import ua.org.goservice.cashdesk.model.warehouse.Warehouse;
 
 import java.io.IOException;
@@ -44,7 +44,8 @@ public class CashDeskManager {
         try {
             loader.load();
             SaleController saleController = loader.getController();
-            saleController.setDependencies(primaryStage, organizationManager, warehouse, discountCardManager);
+            saleController.setDependencies(primaryStage, organizationManager, warehouse,
+                    discountCardManager, new SaleOperator());
         } catch (IOException e) {
             e.printStackTrace();
         }

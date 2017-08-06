@@ -26,12 +26,14 @@ public class Draft {
         this.draftList = FXCollections.observableArrayList();
     }
 
+    /**
+     *
+     * Product list calculation
+     */
     public void addProduct(Product product, BigDecimal count) {
         boolean isAdded = addProductCount(product, count);
         if (!isAdded) draftList.add(new DraftEntry(product, count));
-        calculateCheckSum();
-        calculateAmountToPaid();
-        calculateOdds();
+        calculateDraft();
     }
 
     private boolean addProductCount(Product product, BigDecimal count) {
@@ -43,6 +45,21 @@ public class Draft {
             }
         }
         return false;
+    }
+
+    public void calculateChanges() {
+        calculateDraft();
+    }
+
+    public void removeEmptyEntry(DraftEntry entry) {
+        draftList.remove(entry);
+        calculateDraft();
+    }
+
+    private void calculateDraft() {
+        calculateCheckSum();
+        calculateAmountToPaid();
+        calculateOdds();
     }
 
     private void calculateCheckSum() {
@@ -80,10 +97,8 @@ public class Draft {
     }
 
     private BigDecimal calculateDiscount(BigDecimal toPaySum, BigDecimal discountCoefficient) {
-        BigDecimal discountAmount = toPaySum.multiply(discountCoefficient)
-                .setScale(2, RoundingMode.HALF_UP);
-        toPaySum = toPaySum.subtract(discountAmount)
-                .setScale(2, RoundingMode.HALF_UP);
+        BigDecimal discountAmount = toPaySum.multiply(discountCoefficient);
+        toPaySum = toPaySum.subtract(discountAmount).setScale(2, RoundingMode.HALF_UP);
         return toPaySum;
     }
 

@@ -42,6 +42,8 @@ public class RequestBuilder implements Extractive {
     @Override
     public String extract() {
         String result = formattedRequest;
+        //todo debug
+        System.out.println(result);
         formattedRequest = null;
         return result;
     }

@@ -8,9 +8,6 @@ import javafx.stage.Stage;
 import ua.org.goservice.cashdesk.controller.dialogs.Alerts;
 import ua.org.goservice.cashdesk.controller.dialogs.alert.AlertCause;
 import ua.org.goservice.cashdesk.model.util.validator.ProductCountValidator;
-import ua.org.goservice.cashdesk.model.util.validator.Validator;
-
-import java.math.BigDecimal;
 
 public class ProductCountDialogController {
     public static final String LOCATION = "/view/cashdesk/dialog/productCountDialog.fxml";
