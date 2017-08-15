@@ -9,6 +9,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import ua.org.goservice.cashdesk.controller.auth.ScreenLocker;
 import ua.org.goservice.cashdesk.controller.cashdesk.sale.SaleController;
@@ -63,12 +64,12 @@ public class RootController {
         }
     }
 
-    void setDependencies(Stage stage, FXMLLoader saleLoader, CashDeskManager cashDeskManager,
+    void setDependencies(Stage stage, FXMLLoader saleLoader, FXMLLoader discountLoader, CashDeskManager cashDeskManager,
                          OrganizationManager organizationManager,
                          Warehouse warehouse, ScreenLocker screenLocker, Scene scene)
     {
         this.stage = stage;
-        setTabContent(saleLoader.getRoot());
+        setTabContent(saleLoader.getRoot(), discountLoader.getRoot());
         this.cashDeskManager = cashDeskManager;
         this.organizationManager = organizationManager;
         this.warehouse = warehouse;
@@ -77,8 +78,9 @@ public class RootController {
         bindSalePaneHotKeys(saleLoader.getController(), scene);
     }
 
-    private void setTabContent(AnchorPane salePane) {
+    private void setTabContent(AnchorPane salePane, StackPane discountPane) {
         saleTab.setContent(salePane);
+        cardTab.setContent(discountPane);
     }
 
     private void bindSalePaneHotKeys(SaleController controller, Scene scene) {

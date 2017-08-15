@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import impl.org.controlsfx.skin.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<StackPane prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #CCCCFF;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ua.org.goservice.cashdesk.controller.cashdesk.discount.IssueDiscountController">
+   <children>
+      <DecorationPane alignment="CENTER_LEFT" maxHeight="40.0" styleClass="title-container" StackPane.alignment="TOP_CENTER">
+         <children>
+            <Label text="Выдача дисконтных карт">
+               <font>
+                  <Font size="15.0" />
+               </font>
+               <padding>
+                  <Insets left="30.0" />
+               </padding>
+            </Label>
+         </children>
+      </DecorationPane>
+      <VBox maxHeight="520.0" maxWidth="550.0" spacing="10.0" styleClass="container" StackPane.alignment="CENTER">
+         <children>
+            <Label text="Детали карты:">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Label>
+            <GridPane vgap="25.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <JFXTextField fx:id="cardNumber" focusColor="#4db2ec" labelFloat="true" promptText="Номер карты">
+                     <font>
+                        <Font size="15.0" />
+                     </font></JFXTextField>
+                  <HBox alignment="CENTER" spacing="30.0" GridPane.rowIndex="2">
+                     <children>
+                        <JFXRadioButton fx:id="discountType" focusTraversable="false" text="Скидочная" GridPane.rowIndex="2" />
+                        <JFXRadioButton fx:id="accumulativeType" focusTraversable="false" text="Накопительная" GridPane.rowIndex="2" />
+                     </children>
+                  </HBox>
+                  <JFXComboBox fx:id="discountRateBox" focusColor="#4db2ec" labelFloat="true" promptText="Скидка %" GridPane.rowIndex="1" />
+               </children>
+               <padding>
+                  <Insets left="50.0" right="50.0" />
+               </padding>
+            </GridPane>
+            <Label text="Данные клиента:">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Label>
+            <GridPane vgap="25.0">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <JFXTextField fx:id="customerName" focusColor="#4db2ec" labelFloat="true" promptText="Имя">
+                     <font>
+                        <Font size="15.0" />
+                     </font></JFXTextField>
+                  <JFXTextField fx:id="customerSurname" focusColor="#4db2ec" labelFloat="true" promptText="Фамилия" GridPane.rowIndex="1">
+                     <font>
+                        <Font size="15.0" />
+                     </font></JFXTextField>
+                  <JFXTextField fx:id="phoneNumber" focusColor="#4db2ec" labelFloat="true" promptText="Телефон" GridPane.rowIndex="2">
+                     <font>
+                        <Font size="15.0" />
+                     </font></JFXTextField>
+               </children>
+               <padding>
+                  <Insets left="50.0" right="50.0" />
+               </padding>
+            </GridPane>
+            <HBox alignment="CENTER_RIGHT" spacing="30.0" VBox.vgrow="SOMETIMES">
+               <children>
+                  <JFXButton onAction="#clear" prefHeight="30.0" prefWidth="100.0" text="Очистить">
+                     <font>
+                        <Font size="14.0" />
+                     </font></JFXButton>
+                  <JFXButton onAction="#submit" prefHeight="30.0" prefWidth="100.0" text="Отправить">
+                     <font>
+                        <Font size="14.0" />
+                     </font></JFXButton>
+               </children>
+               <padding>
+                  <Insets right="50.0" />
+               </padding>
+            </HBox>
+         </children>
+         <padding>
+            <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
+         </padding>
+         <StackPane.margin>
+            <Insets top="40.0" />
+         </StackPane.margin></VBox>
+   </children>
+</StackPane>

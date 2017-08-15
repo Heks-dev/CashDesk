@@ -1,6 +1,6 @@
 package ua.org.goservice.cashdesk.controller.dialogs.alert;
 
-import ua.org.goservice.cashdesk.model.util.PropertyLoader;
+import ua.org.goservice.cashdesk.model.util.loader.PropertyLoader;
 
 public enum AlertCause {
     CHANGE_COUNTERPARTY("change.counterparty"),
@@ -12,7 +12,8 @@ public enum AlertCause {
     NOT_FOUND("not.found"),
     ACTION_DENIED("action.denied"),
     COMPLETE_SALE("complete.sale"),
-    ISSUE_CHANGE("issue.change");
+    ISSUE_CHANGE("issue.change"),
+    CARD_ISSUED("card.issued");
 
     private static final PropertyLoader title_loader = new PropertyLoader("/strings/alert-title.properties");
     private static final PropertyLoader content_loader = new PropertyLoader("/strings/alert-content.properties");

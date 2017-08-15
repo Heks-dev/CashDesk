@@ -1,6 +1,6 @@
 package ua.org.goservice.cashdesk.model.exception;
 
-import ua.org.goservice.cashdesk.model.util.PropertyLoader;
+import ua.org.goservice.cashdesk.model.util.loader.PropertyLoader;
 
 public final class Exceptions {
     private static final PropertyLoader loader = new PropertyLoader("/strings/exception.properties");
@@ -42,5 +42,12 @@ public final class Exceptions {
     public static final String PAYMENT_AMOUNT_EXCEEDED = loader.getValue("payment.amount.exceeded");
 
     public static final String BOTH_PAYMENT_AMOUNT_EXCEEDED = loader.getValue("both.payment.amount.exceeded");
+
     public static final String AMOUNT_NOT_MATCH = loader.getValue("amount.not.match");
+
+    public static final String INCORRECT_PHONE_NUM = loader.getValue("incorrect.phone.num");
+
+    public static final String CARD_ALREADY_EXISTS = loader.getValue("card.already.exists");
+
+    public static final String INSUFFICIENT_BONUS_AMOUNT = loader.getValue("insufficient.bonus.amount");
 }

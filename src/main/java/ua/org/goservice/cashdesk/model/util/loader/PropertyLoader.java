@@ -1,4 +1,4 @@
-package ua.org.goservice.cashdesk.model.util;
+package ua.org.goservice.cashdesk.model.util.loader;
 
 import java.io.IOException;
 import java.io.InputStream;

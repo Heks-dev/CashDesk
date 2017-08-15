@@ -9,7 +9,8 @@ import java.util.ArrayList;
 
 public enum Token {
     ORGANIZATION_LIST(new TypeToken<ArrayList<Organization>>(){}.getType()),
-    PRODUCT_LIST(new TypeToken<ArrayList<Product>>(){}.getType());
+    PRODUCT_LIST(new TypeToken<ArrayList<Product>>(){}.getType()),
+    DISCOUNT_RATE_LIST(new TypeToken<ArrayList<Integer>>(){}.getType());
 
     private final Type type;
 

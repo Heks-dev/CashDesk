@@ -1,6 +1,6 @@
 package ua.org.goservice.cashdesk.model.communication.request;
 
-import ua.org.goservice.cashdesk.model.util.PropertyLoader;
+import ua.org.goservice.cashdesk.model.util.loader.PropertyLoader;
 
 final class RequestBuilderProperty {
 

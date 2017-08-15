@@ -4,6 +4,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import ua.org.goservice.cashdesk.controller.cashdesk.sale.SaleUIAssistant;
 import ua.org.goservice.cashdesk.model.discount.DiscountCard;
+import ua.org.goservice.cashdesk.model.exception.ActionDeniedException;
+import ua.org.goservice.cashdesk.model.exception.Exceptions;
 import ua.org.goservice.cashdesk.model.warehouse.Product;
 
 import java.math.BigDecimal;
@@ -119,6 +121,7 @@ public class Draft {
     private void chargeBonuses(BigDecimal toPaySum, BigDecimal discountCoefficient) {
         bonusesAccrued = toPaySum.multiply(discountCoefficient)
                 .setScale(2, RoundingMode.HALF_UP);
+        uiAssistant.setBonusesAccrued(bonusesAccrued.toString());
     }
 
     private void cancelChargeBonuses() {
@@ -149,12 +152,22 @@ public class Draft {
 
     public void payInBonuses(BigDecimal fund) {
         fund = nullIfZero(fund);
+        checkAvailableAmount(fund);
         funds.payInBonuses(fund);
         calculateOdds();
         calculateDiscountSums();
         uiAssistant.setContributedBonusFund(fund == null ? null : fund.toString());
         uiAssistant.setContributedTotalFunds(funds.getTotalContributed() == null ?
                 null : funds.getTotalContributed().toString());
+    }
+
+    private void checkAvailableAmount(BigDecimal fund) {
+        BigDecimal availableAmount = discountCard.getBonus();
+        if (fund != null) {
+            if (fund.compareTo(availableAmount) > 0) {
+                throw new ActionDeniedException(Exceptions.INSUFFICIENT_BONUS_AMOUNT);
+            }
+        }
     }
 
     private BigDecimal nullIfZero(BigDecimal fund) {
@@ -183,7 +196,7 @@ public class Draft {
     }
 
     private void updateDiscountCardUIArea() {
-        uiAssistant.setDiscountCardOwner(discountCard.getName());
+        uiAssistant.setDiscountCardOwner(discountCard.getName() + " " + discountCard.getLastname());
         uiAssistant.setDiscountCardNumber(discountCard.getBonuscardnum().toString());
         uiAssistant.setDiscountCardType(discountCard.getLocaleType(discountCard.getType()));
         if (discountCard.getType().equals(DiscountCard.DISCOUNT_TYPE)) {

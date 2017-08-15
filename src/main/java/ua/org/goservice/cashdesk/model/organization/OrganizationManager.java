@@ -11,7 +11,7 @@ import ua.org.goservice.cashdesk.model.communication.request.Filter;
 import ua.org.goservice.cashdesk.model.communication.request.FilterSet;
 import ua.org.goservice.cashdesk.model.communication.request.RequestBuilder;
 import ua.org.goservice.cashdesk.model.exception.Exceptions;
-import ua.org.goservice.cashdesk.model.util.PropertyLoader;
+import ua.org.goservice.cashdesk.model.util.loader.PropertyLoader;
 import ua.org.goservice.cashdesk.model.util.json.JsonAgent;
 import ua.org.goservice.cashdesk.model.util.json.JsonFormat;
 import ua.org.goservice.cashdesk.model.util.json.Token;

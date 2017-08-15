@@ -1,6 +1,6 @@
 package ua.org.goservice.cashdesk.model.draft;
 
-import ua.org.goservice.cashdesk.model.util.PropertyLoader;
+import ua.org.goservice.cashdesk.model.util.loader.PropertyLoader;
 
 public enum PaymentMethod {
     CASH("cash"),

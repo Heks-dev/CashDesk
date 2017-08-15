@@ -77,3 +77,19 @@
     -fx-focus-color: transparent;
     -fx-border-color: transparent;
 }
+
+.framed-top {
+    -fx-border-width: 1 1 0 1;
+}
+
+.framed-bottom {
+    -fx-border-width: 0 1 1 1;
+}
+
+.framed {
+    -fx-border-width: 1;
+}
+
+.frame-color {
+    -fx-border-color: #4db2ec;
+}
