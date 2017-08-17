@@ -198,7 +198,7 @@ public class Draft {
     private void updateDiscountCardUIArea() {
         uiAssistant.setDiscountCardOwner(discountCard.getName() + " " + discountCard.getLastname());
         uiAssistant.setDiscountCardNumber(discountCard.getBonuscardnum().toString());
-        uiAssistant.setDiscountCardType(discountCard.getLocaleType(discountCard.getType()));
+        uiAssistant.setDiscountCardType(DiscountCard.getLocaleType(discountCard.getType()));
         if (discountCard.getType().equals(DiscountCard.DISCOUNT_TYPE)) {
             uiAssistant.setDiscountCardBalance("-");
             uiAssistant.setDiscountRate(discountCard.getCoefficient().toString());

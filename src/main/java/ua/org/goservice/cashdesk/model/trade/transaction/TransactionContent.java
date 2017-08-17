@@ -6,6 +6,8 @@ import java.util.List;
 public abstract class TransactionContent {
 
     private String active;
+    private Integer id;
+    private String time;
     private final Integer idfrom;
     private final Integer idfor;
     private final Integer priceid;
@@ -17,6 +19,14 @@ public abstract class TransactionContent {
     TransactionContent(Integer idfrom, Integer idfor, Integer priceid,
                               BigDecimal cash_payment, BigDecimal bonus_payment,
                               Long bonus_card, List<SaleUnit> arraygoods) {
+        this(null, null, idfrom, idfor, priceid, cash_payment, bonus_payment, bonus_card, arraygoods);
+    }
+
+    private TransactionContent(Integer id, String time, Integer idfrom, Integer idfor, Integer priceid,
+                       BigDecimal cash_payment, BigDecimal bonus_payment,
+                       Long bonus_card, List<SaleUnit> arraygoods) {
+        this.id = id;
+        this.time = time;
         this.idfrom = idfrom;
         this.idfor = idfor;
         this.priceid = priceid;
@@ -32,6 +42,14 @@ public abstract class TransactionContent {
 
     public String getActive() {
         return active;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public String getTime() {
+         return time;
     }
 
     public Integer getIdfrom() {

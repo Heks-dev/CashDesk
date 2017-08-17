@@ -2,7 +2,7 @@ package ua.org.goservice.cashdesk.model.trade.transaction;
 
 import java.math.BigDecimal;
 
-class SaleUnit {
+public class SaleUnit {
     private final Integer idgood;
     private final BigDecimal countgood;
     private final BigDecimal price;

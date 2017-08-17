@@ -10,7 +10,7 @@ import ua.org.goservice.cashdesk.model.communication.RequestExecutor;
 import ua.org.goservice.cashdesk.model.communication.request.Filter;
 import ua.org.goservice.cashdesk.model.communication.request.FilterSet;
 import ua.org.goservice.cashdesk.model.communication.request.RequestBuilder;
-import ua.org.goservice.cashdesk.model.util.SearchValidator;
+import ua.org.goservice.cashdesk.model.util.validator.SearchValidator;
 import ua.org.goservice.cashdesk.model.util.json.Token;
 import ua.org.goservice.cashdesk.model.util.loader.FileLoader;
 import ua.org.goservice.cashdesk.model.util.validator.ResponseValidator;
@@ -18,7 +18,6 @@ import ua.org.goservice.cashdesk.model.util.validator.Validator;
 import ua.org.goservice.cashdesk.model.util.json.JsonAgent;
 import ua.org.goservice.cashdesk.model.util.json.JsonFormat;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class DiscountCardManager implements DiscountCardSearcher {

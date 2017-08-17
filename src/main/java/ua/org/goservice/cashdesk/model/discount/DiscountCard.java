@@ -50,7 +50,7 @@ public class DiscountCard {
         return cardInformation.getType();
     }
 
-    public String getLocaleType(String discountType) {
+    public static String getLocaleType(String discountType) {
         return loader.getValue(discountType);
     }
 }

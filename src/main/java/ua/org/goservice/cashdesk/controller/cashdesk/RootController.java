@@ -12,6 +12,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import ua.org.goservice.cashdesk.controller.auth.ScreenLocker;
+import ua.org.goservice.cashdesk.controller.cashdesk.refund.RefundController;
 import ua.org.goservice.cashdesk.controller.cashdesk.sale.SaleController;
 import ua.org.goservice.cashdesk.controller.dialogs.Alerts;
 import ua.org.goservice.cashdesk.controller.dialogs.alert.AlertCause;
@@ -64,39 +65,48 @@ public class RootController {
         }
     }
 
-    void setDependencies(Stage stage, FXMLLoader saleLoader, FXMLLoader discountLoader, CashDeskManager cashDeskManager,
+    void setDependencies(Stage stage, FXMLLoader saleLoader, FXMLLoader discountLoader, FXMLLoader refundLoader,
+                         CashDeskManager cashDeskManager,
                          OrganizationManager organizationManager,
                          Warehouse warehouse, ScreenLocker screenLocker, Scene scene)
     {
         this.stage = stage;
-        setTabContent(saleLoader.getRoot(), discountLoader.getRoot());
+        setTabContent(saleLoader.getRoot(), discountLoader.getRoot(), refundLoader.getRoot());
         this.cashDeskManager = cashDeskManager;
         this.organizationManager = organizationManager;
         this.warehouse = warehouse;
         this.screenLocker = screenLocker;
         bindTabHotKeys(scene);
-        bindSalePaneHotKeys(saleLoader.getController(), scene);
+        bindContributeFundsHotKeys(saleLoader.getController(), refundLoader.getController(), scene);
     }
 
-    private void setTabContent(AnchorPane salePane, StackPane discountPane) {
+    private void setTabContent(AnchorPane salePane, StackPane discountPane, StackPane refundPane) {
         saleTab.setContent(salePane);
         cardTab.setContent(discountPane);
+        refundTab.setContent(refundPane);
     }
 
-    private void bindSalePaneHotKeys(SaleController controller, Scene scene) {
+    private void bindContributeFundsHotKeys(SaleController saleController,
+                                            RefundController refundController,
+                                            Scene scene)
+    {
         scene.getAccelerators().put(new KeyCodeCombination(KeyCode.Z, KeyCombination.ALT_DOWN), () -> {
             if (tabPane.getSelectionModel().getSelectedItem().equals(saleTab)) {
-                controller.callContributeCashFund();
+                saleController.callContributeCashFund();
+            } else if (tabPane.getSelectionModel().getSelectedItem().equals(refundTab)) {
+                refundController.callContributeCashFund();
             }
         });
         scene.getAccelerators().put(new KeyCodeCombination(KeyCode.X, KeyCombination.ALT_DOWN), () -> {
             if (tabPane.getSelectionModel().getSelectedItem().equals(saleTab)) {
-                controller.callContributeTerminalFund();
+                saleController.callContributeTerminalFund();
             }
         });
         scene.getAccelerators().put(new KeyCodeCombination(KeyCode.C, KeyCombination.ALT_DOWN), () -> {
             if (tabPane.getSelectionModel().getSelectedItem().equals(saleTab)) {
-                controller.callContributeBonusesFund();
+                saleController.callContributeBonusesFund();
+            } else if (tabPane.getSelectionModel().getSelectedItem().equals(refundTab)) {
+                refundController.callContributeBonusesFund();
             }
         });
     }

@@ -27,6 +27,7 @@ public class Warehouse implements IDGoodSearcher {
     private ObservableList<Product> priceList = FXCollections.observableArrayList();
     private Map<String, Product> namedProductStorage;
     private Map<String, Product> barcodeProductStorage;
+    private Map<Integer, Product> idProductStorage;
 
     public Warehouse(Integer storeid, Organization currentBuyer) {
         this.storeid = storeid;
@@ -54,15 +55,22 @@ public class Warehouse implements IDGoodSearcher {
     private void mappingProducts() {
         namedProductStorage = new HashMap<>();
         barcodeProductStorage = new HashMap<>();
+        idProductStorage = new HashMap<>();
         for (Product product : priceList) {
             namedProductStorage.put(product.toString(), product);
             barcodeProductStorage.put(product.getBarcode(), product);
+            idProductStorage.put(product.getGoodid(), product);
         }
     }
 
     @Override
     public Integer findGoodID(String barcode) {
         return barcodeProductStorage.get(barcode).getGoodid();
+    }
+
+    @Override
+    public Product findProduct(Integer goodID) {
+        return idProductStorage.get(goodID);
     }
 
     public Product getProductByName(String name) {

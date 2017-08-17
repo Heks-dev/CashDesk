@@ -7,6 +7,7 @@ import javafx.stage.Stage;
 import ua.org.goservice.cashdesk.MainApp;
 import ua.org.goservice.cashdesk.controller.auth.ScreenLocker;
 import ua.org.goservice.cashdesk.controller.cashdesk.discount.IssueDiscountController;
+import ua.org.goservice.cashdesk.controller.cashdesk.refund.RefundController;
 import ua.org.goservice.cashdesk.controller.cashdesk.sale.SaleController;
 import ua.org.goservice.cashdesk.model.discount.DiscountCardManager;
 import ua.org.goservice.cashdesk.model.employee.Employee;
@@ -35,8 +36,9 @@ public class CashDeskManager {
         // load panes
         FXMLLoader saleLoader = loadSalePane(organizationManager, warehouse, discountCardManager);
         FXMLLoader discountLoader = loadDiscountPane(discountCardManager);
+        FXMLLoader refundLoader = loadRefundPane(warehouse, discountCardManager);
         // load root
-        loadRoot(saleLoader, discountLoader, organizationManager, warehouse);
+        loadRoot(saleLoader, discountLoader, refundLoader, organizationManager, warehouse);
         showCashDesk();
     }
 
@@ -66,7 +68,20 @@ public class CashDeskManager {
         return loader;
     }
 
-    private void loadRoot(FXMLLoader saleLoader, FXMLLoader discountLoader, OrganizationManager organizationManager,
+    private FXMLLoader loadRefundPane(Warehouse warehouse, DiscountCardManager discountCardManager) {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(RefundController.LOCATION));
+        try {
+            loader.load();
+            RefundController controller = loader.getController();
+            controller.setDependencies(primaryStage, warehouse,
+                    discountCardManager);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return loader;
+    }
+
+    private void loadRoot(FXMLLoader saleLoader, FXMLLoader discountLoader, FXMLLoader refundLoader, OrganizationManager organizationManager,
                           Warehouse warehouse) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(RootController.LOCATION));
@@ -75,7 +90,7 @@ public class CashDeskManager {
             scene.getStylesheets().add("/assets/css/main.css");
             primaryStage.setScene(scene);
             RootController controller = loader.getController();
-            controller.setDependencies(primaryStage, saleLoader, discountLoader,
+            controller.setDependencies(primaryStage, saleLoader, discountLoader, refundLoader,
                     this, organizationManager, warehouse, screenLocker, scene);
         } catch (IOException e) {
             e.printStackTrace();

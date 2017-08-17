@@ -50,4 +50,6 @@ public final class Exceptions {
     public static final String CARD_ALREADY_EXISTS = loader.getValue("card.already.exists");
 
     public static final String INSUFFICIENT_BONUS_AMOUNT = loader.getValue("insufficient.bonus.amount");
+
+    public static final String CASH_MEMO_NOT_FOUND = loader.getValue("cash.memo.not.found");
 }

@@ -1,4 +1,4 @@
-package ua.org.goservice.cashdesk.model.util;
+package ua.org.goservice.cashdesk.model.util.validator;
 
 import ua.org.goservice.cashdesk.model.exception.Exceptions;
 import ua.org.goservice.cashdesk.model.exception.NotFoundException;

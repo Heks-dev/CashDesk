@@ -87,6 +87,11 @@ public class DraftEntry {
         calculateTotalSum();
     }
 
+    public void setPrice(BigDecimal newPrice) {
+        price.setValue(newPrice);
+        calculateTotalSum();
+    }
+
 
     private void calculateTotalSum() {
         totalSum.setValue(price.getValue().multiply(count.getValue())

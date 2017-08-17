@@ -79,15 +79,15 @@
 }
 
 .framed-top {
-    -fx-border-width: 1 1 0 1;
+    -fx-border-width: 2 2 0 2;
 }
 
 .framed-bottom {
-    -fx-border-width: 0 1 1 1;
+    -fx-border-width: 0 2 2 2;
 }
 
 .framed {
-    -fx-border-width: 1;
+    -fx-border-width: 2;
 }
 
 .frame-color {
