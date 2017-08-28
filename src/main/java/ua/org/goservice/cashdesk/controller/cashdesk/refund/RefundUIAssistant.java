@@ -53,6 +53,8 @@ public class RefundUIAssistant {
         cashFund.setValue(null);
         terminalFund.setValue(null);
         bonusFund.setValue(null);
+        refundCash.setValue(null);
+        refundBonuses.setValue(null);
         totalRefundSum.setValue(null);
     }
 

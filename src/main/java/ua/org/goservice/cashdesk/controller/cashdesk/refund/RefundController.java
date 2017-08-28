@@ -1,30 +1,32 @@
 package ua.org.goservice.cashdesk.controller.cashdesk.refund;
 
 import com.jfoenix.controls.JFXCheckBox;
+import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.stage.Popup;
 import javafx.stage.Stage;
-import ua.org.goservice.cashdesk.controller.control.EditingCell;
 import ua.org.goservice.cashdesk.controller.control.TextFieldCell;
 import ua.org.goservice.cashdesk.controller.dialogs.Alerts;
 import ua.org.goservice.cashdesk.controller.dialogs.Dialogs;
 import ua.org.goservice.cashdesk.controller.dialogs.alert.AlertCause;
 import ua.org.goservice.cashdesk.model.discount.DiscountCard;
 import ua.org.goservice.cashdesk.model.discount.DiscountCardSearcher;
-import ua.org.goservice.cashdesk.model.draft.DraftEntry;
 import ua.org.goservice.cashdesk.model.draft.PaymentMethod;
 import ua.org.goservice.cashdesk.model.draft.RefundDraft;
 import ua.org.goservice.cashdesk.model.draft.RefundDraftEntry;
+import ua.org.goservice.cashdesk.model.draft.RefundReason;
 import ua.org.goservice.cashdesk.model.exception.ActionDeniedException;
 import ua.org.goservice.cashdesk.model.exception.Exceptions;
 import ua.org.goservice.cashdesk.model.exception.NotFoundException;
 import ua.org.goservice.cashdesk.model.trade.RefundOperator;
+import ua.org.goservice.cashdesk.model.trade.transaction.RefundTransaction;
 import ua.org.goservice.cashdesk.model.trade.transaction.SaleContent;
+import ua.org.goservice.cashdesk.model.util.validator.ComplexRefundValidator;
 import ua.org.goservice.cashdesk.model.util.validator.ProductCountValidator;
 import ua.org.goservice.cashdesk.model.util.validator.field.CheckNumberFieldValidator;
 import ua.org.goservice.cashdesk.model.util.validator.fund.DependFundValidator;
@@ -42,6 +44,8 @@ public class RefundController implements Initializable {
      */
     @FXML
     private JFXTextField searchField;
+    @FXML
+    private JFXComboBox<RefundReason> refundReasonBox;
     @FXML
     private JFXCheckBox fullRefund;
     /**
@@ -110,11 +114,12 @@ public class RefundController implements Initializable {
         boolean emptyField = searchField.getText() == null || searchField.getText().length() == 0;
         if (emptyField) return;
         if (!searchField.validate()) return;
+        closeOperation();
         try {
             Integer enteredID = Integer.valueOf(searchField.getText());
             SaleContent saleContent = operator.loadSaleContent(enteredID);
             draft = new RefundDraft(uiAssistant, saleContent, goodSearcher, cardSearcher);
-            draftTable.getItems().setAll(draft.getSaleList());
+            draftTable.setItems(draft.getSaleList());
         } catch (NotFoundException e) {
             AlertCause cause = AlertCause.NOT_FOUND;
             cause.setContent(e.getMessage());
@@ -124,12 +129,37 @@ public class RefundController implements Initializable {
         }
     }
 
+    private void closeOperation() {
+        draft = null;
+        uiAssistant.clearUI();
+        draftTable.setItems(null);
+        refundReasonBox.setValue(null);
+    }
+
     @FXML
     private void submit() {
+        if (draft == null || draft.getAmountToRefund() == null) return;
+        if (Alerts.confirm(stage, AlertCause.COMPLETE_REFUND)) {
+            try {
+                RefundReason reason = refundReasonBox.getSelectionModel().getSelectedItem();
+                if (reason == null) {
+                    throw new ActionDeniedException(Exceptions.UNSPECIFIED_REFUND_REASON);
+                }
+                ComplexRefundValidator validator = new ComplexRefundValidator();
+                validator.validate(draft);
+                operator.complete(new RefundTransaction(draft, goodSearcher, reason));
+                uiAssistant.clearUI();
+            } catch (ActionDeniedException e) {
+                AlertCause cause = AlertCause.ACTION_DENIED;
+                cause.setContent(e.getMessage());
+                Alerts.notifying(stage, cause);
+            }
+        }
     }
 
     @FXML
     private void cancel() {
+        closeOperation();
     }
 
     public void setDependencies(Stage stage, IDGoodSearcher goodSearcher, DiscountCardSearcher cardSearcher) {
@@ -145,15 +175,18 @@ public class RefundController implements Initializable {
         initializeDraftColumns();
         indicateObservables();
         uiAssistant.clearUI();
+        refundReasonBox.setItems(operator.loadRefundReasons());
     }
 
     private void initializeFullRefundBox() {
-        fullRefund.selectedProperty().addListener((observable, oldValue, newValue) -> {
+        fullRefund.selectedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
             if (draft != null) {
                 if (newValue) {
                     draft.fullRefund(true);
+                    draftTable.setEditable(false);
                 } else {
                     draft.fullRefund(false);
+                    draftTable.setEditable(true);
                 }
             }
         });
@@ -167,6 +200,7 @@ public class RefundController implements Initializable {
         quantityColumn.setCellValueFactory(cellData -> cellData.getValue().countProperty());
         totalPriceColumn.setCellValueFactory(cellData -> cellData.getValue().totalSumProperty());
         refundQuantityColumn.setCellFactory(param -> new TextFieldCell(new CellProductCountValidator()));
+        refundQuantityColumn.setCellValueFactory(cellData -> cellData.getValue().refundCountProperty());
         refundQuantityColumn.setOnEditCommit(event -> {
             RefundDraftEntry entry = event.getRowValue();
             try {
@@ -208,7 +242,7 @@ public class RefundController implements Initializable {
     }
 
     public void callContributeCashFund() {
-        if (draft == null || draft.getRefundList().size() == 0) return;
+        if (draft == null || draft.getAmountToRefund() == null) return;
         try {
             DependFundValidator validator = new DependFundValidator(draft.getTotalContributedFunds(),
                     draft.getCashFund(), draft.getAmountToRefund());
@@ -223,7 +257,7 @@ public class RefundController implements Initializable {
     }
 
     public void callContributeBonusesFund() {
-        if (draft == null || draft.getRefundList().size() == 0) return;
+        if (draft == null || draft.getAmountToRefund() == null) return;
         try {
             if (draft.getDiscountCard() == null || draft.getDiscountCard().getType().equals(DiscountCard.DISCOUNT_TYPE)) {
                 throw new ActionDeniedException(Exceptions.DISCOUNT_NOT_SPECIFIED);

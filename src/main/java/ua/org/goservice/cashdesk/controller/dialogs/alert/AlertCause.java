@@ -13,7 +13,8 @@ public enum AlertCause {
     ACTION_DENIED("action.denied"),
     COMPLETE_SALE("complete.sale"),
     ISSUE_CHANGE("issue.change"),
-    CARD_ISSUED("card.issued");
+    CARD_ISSUED("card.issued"),
+    COMPLETE_REFUND("complete.refund");
 
     private static final PropertyLoader title_loader = new PropertyLoader("/strings/alert-title.properties");
     private static final PropertyLoader content_loader = new PropertyLoader("/strings/alert-content.properties");

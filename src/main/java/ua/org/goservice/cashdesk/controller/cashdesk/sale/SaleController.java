@@ -156,7 +156,7 @@ public class SaleController implements Initializable {
 
     @FXML
     private void handleCompleteSale() {
-        if (draft == null) return;
+        if (draft == null || draft.getDraftList().size() == 0) return;
         if (Alerts.confirm(stage, AlertCause.COMPLETE_SALE)) {
             try {
                 ComplexFundValidator validator = new ComplexFundValidator();

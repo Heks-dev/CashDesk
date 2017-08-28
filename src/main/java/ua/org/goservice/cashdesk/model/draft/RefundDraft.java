@@ -12,13 +12,13 @@ import ua.org.goservice.cashdesk.model.warehouse.Product;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.ArrayList;
 import java.util.List;
 
 public class RefundDraft {
 
     private RefundUIAssistant uiAssistant;
     private ObservableList<RefundDraftEntry> saleList;
-    private ObservableList<RefundDraftEntry> refundList = FXCollections.observableArrayList();
     private final SaleContent saleContent;
 
     private BigDecimal checkSum;
@@ -65,7 +65,7 @@ public class RefundDraft {
 
     private BigDecimal calculateSum(ObservableList<RefundDraftEntry> list) {
         BigDecimal sum = BigDecimal.ZERO;
-        for (DraftEntry draftEntry : list) {
+        for (RefundDraftEntry draftEntry : list) {
             sum = sum.add(draftEntry.getTotalSum());
         }
         return sum;
@@ -83,37 +83,44 @@ public class RefundDraft {
         return result;
     }
 
+    private void calculateRefundSum() {
+        BigDecimal sum = BigDecimal.ZERO;
+        for (RefundDraftEntry draftEntry : saleList) {
+            if (draftEntry.getTotalRefundSum() != null) {
+                sum = sum.add(draftEntry.getTotalRefundSum());
+            }
+        }
+        if (sum.compareTo(BigDecimal.ZERO) <= 0) {
+            refundSum = null;
+            resetFunds();
+        } else {
+            this.refundSum = calculateDiscountSum(sum);
+        }
+        uiAssistant.setTotalRefundSum(refundSum == null ? null : refundSum.toString());
+    }
+
     private void convertToDraftEntry(IDGoodSearcher goodSearcher) {
         saleList = FXCollections.observableArrayList();
         List<SaleUnit> saleUnits = saleContent.getArraygoods();
+        List<RefundDraftEntry> draftEntries = new ArrayList<>();
         for (SaleUnit saleUnit : saleUnits) {
             Product product = goodSearcher.findProduct(saleUnit.getIdgood());
             RefundDraftEntry draftEntry = new RefundDraftEntry(product, saleUnit.getCountgood());
             draftEntry.setPrice(saleUnit.getPrice());
-            saleList.add(draftEntry);
+            draftEntries.add(draftEntry);
         }
+        saleList.setAll(draftEntries);
     }
 
     public void fullRefund(boolean condition) {
-        if (condition) {
-            refundList.setAll(saleList);
-        } else {
-            if (refundList.size() != 0) {
-                refundList.remove(0, refundList.size());
-                resetFunds();
+        for (RefundDraftEntry draftEntry : saleList) {
+            if (condition) {
+                draftEntry.setRefundCount(draftEntry.getCount());
+            } else {
+                draftEntry.setRefundCount(null);
             }
         }
         calculateRefundSum();
-    }
-
-    private void calculateRefundSum() {
-        if (refundList.size() == 0) {
-            refundSum = null;
-            resetFunds();
-        } else {
-            refundSum = calculateDiscountSum(calculateSum(refundList));
-        }
-        uiAssistant.setTotalRefundSum(refundSum == null ? null : refundSum.toString());
     }
 
     private void resetFunds() {
@@ -123,10 +130,6 @@ public class RefundDraft {
 
     public ObservableList<RefundDraftEntry> getSaleList() {
         return FXCollections.unmodifiableObservableList(saleList);
-    }
-
-    public ObservableList<RefundDraftEntry> getRefundList() {
-        return refundList;
     }
 
     public void refundInCash(BigDecimal fund) {
@@ -169,13 +172,10 @@ public class RefundDraft {
     }
 
     public void calculateChanges() {
-        refundList.remove(0, refundList.size());
-        for (RefundDraftEntry draftEntry : saleList) {
-            BigDecimal count = draftEntry.getRefundCount();
-            if (count != null && count.compareTo(BigDecimal.ZERO) > 0) {
-                refundList.add(draftEntry);
-            }
-            calculateRefundSum();
-        }
+        calculateRefundSum();
+    }
+
+    public SaleContent getSaleContent() {
+        return saleContent;
     }
 }

@@ -13,13 +13,17 @@ public abstract class TransactionContent {
     private final Integer priceid;
     private final BigDecimal cash_payment;
     private final BigDecimal bonus_payment;
-    private final Long bonus_card;
+    private final String bonus_card;
     private final List<SaleUnit> arraygoods;
 
     TransactionContent(Integer idfrom, Integer idfor, Integer priceid,
                               BigDecimal cash_payment, BigDecimal bonus_payment,
                               Long bonus_card, List<SaleUnit> arraygoods) {
         this(null, null, idfrom, idfor, priceid, cash_payment, bonus_payment, bonus_card, arraygoods);
+    }
+
+    TransactionContent(Integer id, Integer idfrom, Integer idfor, BigDecimal cash_payment, BigDecimal bonus_payment, List<SaleUnit> arraygoods) {
+        this(id, null, idfrom, idfor, null, cash_payment, bonus_payment, null, arraygoods);
     }
 
     private TransactionContent(Integer id, String time, Integer idfrom, Integer idfor, Integer priceid,
@@ -32,7 +36,7 @@ public abstract class TransactionContent {
         this.priceid = priceid;
         this.cash_payment = cash_payment;
         this.bonus_payment = bonus_payment;
-        this.bonus_card = bonus_card;
+        this.bonus_card = String.valueOf(bonus_card);
         this.arraygoods = arraygoods;
     }
 
@@ -73,7 +77,7 @@ public abstract class TransactionContent {
     }
 
     public Long getBonus_card() {
-        return bonus_card;
+        return bonus_card == null || bonus_card.equals("none") ? null : Long.valueOf(bonus_card);
     }
 
     public List<SaleUnit> getArraygoods() {

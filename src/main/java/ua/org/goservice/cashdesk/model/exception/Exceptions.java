@@ -52,4 +52,10 @@ public final class Exceptions {
     public static final String INSUFFICIENT_BONUS_AMOUNT = loader.getValue("insufficient.bonus.amount");
 
     public static final String CASH_MEMO_NOT_FOUND = loader.getValue("cash.memo.not.found");
+
+    public static final String EMPTY_REFUND_LIST = loader.getValue("empty.refund.list");
+
+    public static final String REFUND_AMOUNT_EXCEEDED = loader.getValue("refund.amount.exceeded");
+
+    public static final String UNSPECIFIED_REFUND_REASON = loader.getValue("unspec.refund.reason");
 }

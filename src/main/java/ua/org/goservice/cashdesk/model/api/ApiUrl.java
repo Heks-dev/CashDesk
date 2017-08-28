@@ -7,7 +7,8 @@ public enum ApiUrl implements ReadableUrl {
     FLYPAGE("flypage"),
     BONUSES("bonuses"),
     SALE("sale"),
-    REFUND("refund");
+    REFUND("refund"),
+    REFUND_REASON("refund.reason");
 
     private final String value;
 
