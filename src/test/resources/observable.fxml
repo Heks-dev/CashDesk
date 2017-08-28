@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane prefHeight="200.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Sample.ObservableController">
+   <children>
+      <Text fx:id="changeText" layoutX="186.0" layoutY="85.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text for change" textAlignment="CENTER" wrappingWidth="200.0" AnchorPane.bottomAnchor="110.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" />
+      <Button layoutX="170.0" layoutY="124.0" mnemonicParsing="false" onAction="#handleChange" prefHeight="30.0" text="Change" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="160.0" AnchorPane.rightAnchor="160.0" />
+   </children>
+</AnchorPane>
