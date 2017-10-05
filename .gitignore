@@ -2,4 +2,3 @@
 target/
 *.iml
 src/test/java/*
-src/test/resources/*g

@@ -3,7 +3,6 @@ package ua.org.goservice.cashdesk.model.util.loader;
 import ua.org.goservice.cashdesk.model.exception.ActionDeniedException;
 
 import java.io.*;
-import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
